@@ -114,6 +114,79 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
     }
   }
 
+  const deployAndCreateBatch = async () => {
+    let ipfsHash = ''
+    let harvestTimestamp = 0
+    
+    try {
+      if (!activeAddress || !transactionSigner) throw new Error('Connect wallet')
+      if (!batchId || !productName || !originLocation || !harvestDate) {
+        throw new Error('Fill all batch fields')
+      }
+      
+      setDeploying(true)
+      setLoading(true)
+      
+      console.log('Deploying contract and creating batch with account:', activeAddress)
+      
+      // Upload file to IPFS if provided
+      if (ipfsFile) {
+        const result = await pinFileToIPFS(ipfsFile)
+        ipfsHash = result.IpfsHash
+      }
+      
+      harvestTimestamp = Math.floor(new Date(harvestDate).getTime() / 1000)
+      
+      // Set the signer
+      algorand.setDefaultSigner(transactionSigner)
+      
+      // Step 1: Deploy the contract
+      const factory = new FoodSafetyAppFactory({ defaultSender: activeAddress, algorand })
+      const deployResult = await factory.send.create.bare()
+      const newId = Number(deployResult.appClient.appId)
+      setAppId(newId)
+      
+      enqueueSnackbar(`Contract deployed! App ID: ${newId}. Now creating batch...`, { variant: 'info' })
+      
+      // Step 2: Create the first batch immediately
+      const client = new FoodSafetyAppClient({
+        appId: BigInt(newId),
+        sender: activeAddress,
+        algorand,
+      })
+      
+      await client.send.createBatch({
+        args: {
+          batchId,
+          producerAddress: activeAddress,
+          productName,
+          originLocation,
+          harvestDate: BigInt(harvestTimestamp),
+          ipfsHash: ipfsHash || '',
+        },
+        sender: activeAddress,
+        signer: transactionSigner,
+        sendParams: {
+          populateAppCallResources: true,
+        },
+      })
+      
+      enqueueSnackbar(`Success! Contract deployed (${newId}) and batch ${batchId} created!`, { variant: 'success' })
+      setBatchId('')
+      setProductName('')
+      setOriginLocation('')
+      setHarvestDate('')
+      setIpfsFile(null)
+    } catch (e) {
+      const errorMsg = (e as Error).message
+      console.error('Deploy and create error:', errorMsg)
+      enqueueSnackbar(`Failed: ${errorMsg}`, { variant: 'error' })
+    } finally {
+      setDeploying(false)
+      setLoading(false)
+    }
+  }
+
   const createBatch = async () => {
     let ipfsHash = ''
     let harvestTimestamp = 0
@@ -419,6 +492,16 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
                   }}
                 >
                   Create Batch
+                </button>
+                <button
+                  className={`btn btn-accent col-span-2 ${deploying || loading ? 'loading' : ''}`}
+                  disabled={deploying || loading || !activeAddress}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    void deployAndCreateBatch()
+                  }}
+                >
+                  🚀 Deploy Contract & Create First Batch (All-in-One)
                 </button>
               </div>
             </div>
