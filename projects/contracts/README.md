@@ -1,6 +1,33 @@
-# OnChain-Counter-contracts
+# AgriTrust Smart Contracts
 
-This project has been generated using AlgoKit. See below for default getting started instructions.
+Smart contracts for the AgriTrust blockchain food safety and traceability system, built with Algorand Python.
+
+## Overview
+
+This project contains the FoodSafetyApp smart contract that manages the complete lifecycle of food batches through the supply chain. The contract provides role-based access control, state transitions, and cryptographic verification of off-chain documents via IPFS hashes.
+
+### FoodSafetyApp Contract
+
+The core smart contract manages food batch lifecycle with the following features:
+
+**Batch Lifecycle States:**
+```
+CREATED (0) → APPROVED (2) or REJECTED (3)
+APPROVED (2) → DISTRIBUTED (4)
+Any State → RECALLED (5) [by creator only]
+```
+
+**Operations:**
+- **Create Batch**: Register new food batches with producer information and IPFS hash
+- **Inspect Batch**: Approve or reject batches with inspection report hash
+- **Distribute Batch**: Mark approved batches as distributed
+- **Recall Batch**: Regulator can recall any batch from any state
+- **Query Batch**: Retrieve batch information by batch ID
+
+**Storage:**
+- Uses Algorand Box storage for efficient on-chain data management
+- Stores IPFS hashes for off-chain document verification
+- Maintains complete batch history and state transitions
 
 # Setup
 
@@ -65,10 +92,10 @@ This template provides a set of [algokit generators](https://github.com/algorand
 
 ### Generate Smart Contract 
 
-By default the template creates a single `HelloWorld` contract under counter folder in the `smart_contracts` directory. To add a new contract:
+By default the template creates the FoodSafetyApp contract under the `food_safety` folder in the `smart_contracts` directory. To add a new contract:
 
 1. From the root of the project (`../`) execute `algokit generate smart-contract`. This will create a new starter smart contract and deployment configuration file under `{your_contract_name}` subfolder in the `smart_contracts` directory.
-2. Each contract potentially has different creation parameters and deployment steps. Hence, you need to define your deployment logic in `deploy_config.py`file.
+2. Each contract potentially has different creation parameters and deployment steps. Hence, you need to define your deployment logic in `deploy_config.py` file.
 3. `config.py` file will automatically build all contracts in the `smart_contracts` directory. If you want to build specific contracts manually, modify the default code provided by the template in `config.py` file.
 
 > Please note, above is just a suggested convention tailored for the base configuration and structure of this template. The default code supplied by the template in `config.py` and `index.ts` (if using ts clients) files are tailored for the suggested convention. You are free to modify the structure and naming conventions as you see fit.
@@ -99,7 +126,7 @@ To define custom `algokit project run` commands refer to [documentation](https:/
 #### Setting up GitHub for CI/CD workflow and TestNet deployment
 
   1. Every time you have a change to your smart contract, and when you first initialize the project you need to [build the contract](#initial-setup) and then commit the `smart_contracts/artifacts` folder so the [output stability](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/articles/output_stability.md) tests pass
-  2. Decide what values you want to use for the `allow_update`, `allow_delete` and the `on_schema_break`, `on_update` parameters specified in [`contract.py`](./smart_contracts/counter/contract.py).
+  2. Decide what values you want to use for the `allow_update`, `allow_delete` and the `on_schema_break`, `on_update` parameters specified in [`contract.py`](./smart_contracts/food_safety/contract.py).
      When deploying to LocalNet these values are both set to allow update and replacement of the app for convenience. But for non-LocalNet networks
      the defaults are more conservative.
      These default values will allow the smart contract to be deployed initially, but will not allow the app to be updated or deleted if is changed and the build will instead fail.

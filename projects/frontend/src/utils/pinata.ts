@@ -8,7 +8,11 @@ export interface PinataJsonResult {
 
 export async function pinFileToIPFS(file: File): Promise<PinataFileResult> {
   const jwt = import.meta.env.VITE_PINATA_JWT
-  if (!jwt) throw new Error('Missing VITE_PINATA_JWT')
+  if (!jwt) {
+    // Return placeholder hash for MVP without IPFS
+    console.warn('IPFS disabled: VITE_PINATA_JWT not configured')
+    return { IpfsHash: `placeholder-${file.name}-${Date.now()}` }
+  }
 
   const form = new FormData()
   form.append('file', file)
@@ -24,7 +28,11 @@ export async function pinFileToIPFS(file: File): Promise<PinataFileResult> {
 
 export async function pinJSONToIPFS(json: unknown): Promise<PinataJsonResult> {
   const jwt = import.meta.env.VITE_PINATA_JWT
-  if (!jwt) throw new Error('Missing VITE_PINATA_JWT')
+  if (!jwt) {
+    // Return placeholder hash for MVP without IPFS
+    console.warn('IPFS disabled: VITE_PINATA_JWT not configured')
+    return { IpfsHash: `placeholder-json-${Date.now()}` }
+  }
 
   const res = await fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', {
     method: 'POST',

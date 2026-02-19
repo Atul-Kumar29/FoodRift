@@ -1,0 +1,938 @@
+#pragma version 10
+#pragma typetrack false
+
+// smart_contracts.food_safety.contract.FoodSafetyApp.__algopy_entrypoint_with_init() -> uint64:
+main:
+    intcblock 0 1 2 4
+    bytecblock "batches" 0x001a "creator"
+    txn ApplicationID
+    bnz main_after_if_else@2
+    // smart_contracts/food_safety/contract.py:24-25
+    // # record contract creator
+    // self.creator = Txn.sender
+    bytec_2 // "creator"
+    txn Sender
+    app_global_put
+
+main_after_if_else@2:
+    // smart_contracts/food_safety/contract.py:17
+    // class FoodSafetyApp(ARC4Contract):
+    txn NumAppArgs
+    bz main_bare_routing@10
+    pushbytess 0x357e8966 0x10b905fe 0x380d6890 0x13aaecb3 0x622156a3 // method "create_batch(string,string,string,string,uint64,string)void", method "inspect_batch(string,string,uint64)void", method "distribute_batch(string)void", method "recall_batch(string,string)void", method "get_batch(string)(string,string,string,string,uint64,uint64,string,string)"
+    txna ApplicationArgs 0
+    match main_create_batch_route@5 main_inspect_batch_route@6 main_distribute_batch_route@7 main_recall_batch_route@8 main_get_batch_route@9
+
+main_after_if_else@12:
+    // smart_contracts/food_safety/contract.py:17
+    // class FoodSafetyApp(ARC4Contract):
+    intc_0 // 0
+    return
+
+main_get_batch_route@9:
+    // smart_contracts/food_safety/contract.py:100
+    // @abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/food_safety/contract.py:17
+    // class FoodSafetyApp(ARC4Contract):
+    txna ApplicationArgs 1
+    extract 2 0
+    // smart_contracts/food_safety/contract.py:100
+    // @abimethod(readonly=True)
+    callsub get_batch
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    uncover 7
+    itob
+    uncover 7
+    itob
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    dig 7
+    len
+    pushint 28 // 28
+    +
+    dup
+    itob
+    extract 6 2
+    pushbytes 0x001c
+    swap
+    concat
+    dig 8
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 7
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 6
+    len
+    uncover 2
+    +
+    swap
+    uncover 5
+    concat
+    uncover 4
+    concat
+    dig 1
+    itob
+    extract 6 2
+    concat
+    dig 3
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 6
+    concat
+    uncover 5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    pushbytes 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_recall_batch_route@8:
+    // smart_contracts/food_safety/contract.py:83
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/food_safety/contract.py:17
+    // class FoodSafetyApp(ARC4Contract):
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    extract 2 0
+    // smart_contracts/food_safety/contract.py:83
+    // @abimethod()
+    callsub recall_batch
+    intc_1 // 1
+    return
+
+main_distribute_batch_route@7:
+    // smart_contracts/food_safety/contract.py:66
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/food_safety/contract.py:17
+    // class FoodSafetyApp(ARC4Contract):
+    txna ApplicationArgs 1
+    extract 2 0
+    // smart_contracts/food_safety/contract.py:66
+    // @abimethod()
+    callsub distribute_batch
+    intc_1 // 1
+    return
+
+main_inspect_batch_route@6:
+    // smart_contracts/food_safety/contract.py:45
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/food_safety/contract.py:17
+    // class FoodSafetyApp(ARC4Contract):
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    extract 2 0
+    txna ApplicationArgs 3
+    btoi
+    // smart_contracts/food_safety/contract.py:45
+    // @abimethod()
+    callsub inspect_batch
+    intc_1 // 1
+    return
+
+main_create_batch_route@5:
+    // smart_contracts/food_safety/contract.py:29
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/food_safety/contract.py:17
+    // class FoodSafetyApp(ARC4Contract):
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    extract 2 0
+    txna ApplicationArgs 3
+    extract 2 0
+    txna ApplicationArgs 4
+    extract 2 0
+    txna ApplicationArgs 5
+    btoi
+    txna ApplicationArgs 6
+    extract 2 0
+    // smart_contracts/food_safety/contract.py:29
+    // @abimethod()
+    callsub create_batch
+    intc_1 // 1
+    return
+
+main_bare_routing@10:
+    // smart_contracts/food_safety/contract.py:17
+    // class FoodSafetyApp(ARC4Contract):
+    txn OnCompletion
+    bnz main_after_if_else@12
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_1 // 1
+    return
+
+
+// smart_contracts.food_safety.contract.FoodSafetyApp.create_batch(batch_id: bytes, producer_address: bytes, product_name: bytes, origin_location: bytes, harvest_date: uint64, ipfs_hash: bytes) -> void:
+create_batch:
+    // smart_contracts/food_safety/contract.py:29-30
+    // @abimethod()
+    // def create_batch(self, batch_id: String, producer_address: String, product_name: String, origin_location: String, harvest_date: UInt64, ipfs_hash: String) -> None:
+    proto 6 0
+    // smart_contracts/food_safety/contract.py:32
+    // assert not self.batches.maybe(batch_id)[1], "Batch already exists"
+    bytec_0 // "batches"
+    frame_dig -6
+    concat
+    dup
+    box_get
+    bury 1
+    !
+    assert // Batch already exists
+    // smart_contracts/food_safety/contract.py:35
+    // producer=ARC4String(producer_address),
+    frame_dig -5
+    len
+    itob
+    extract 6 2
+    frame_dig -5
+    concat
+    // smart_contracts/food_safety/contract.py:36
+    // product_name=ARC4String(product_name),
+    frame_dig -4
+    len
+    itob
+    extract 6 2
+    frame_dig -4
+    concat
+    // smart_contracts/food_safety/contract.py:37
+    // origin_location=ARC4String(origin_location),
+    frame_dig -3
+    len
+    itob
+    extract 6 2
+    frame_dig -3
+    concat
+    // smart_contracts/food_safety/contract.py:38
+    // harvest_date=ARC4UInt64(harvest_date),
+    frame_dig -2
+    itob
+    // smart_contracts/food_safety/contract.py:39
+    // status=ARC4UInt64(UInt64(0)),
+    intc_0 // 0
+    itob
+    // smart_contracts/food_safety/contract.py:40
+    // ipfs_hash=ARC4String(ipfs_hash),
+    frame_dig -1
+    len
+    itob
+    extract 6 2
+    frame_dig -1
+    concat
+    // smart_contracts/food_safety/contract.py:34-42
+    // record = BatchRecord(
+    //     producer=ARC4String(producer_address),
+    //     product_name=ARC4String(product_name),
+    //     origin_location=ARC4String(origin_location),
+    //     harvest_date=ARC4UInt64(harvest_date),
+    //     status=ARC4UInt64(UInt64(0)),
+    //     ipfs_hash=ARC4String(ipfs_hash),
+    //     inspection_report_hash=ARC4String(String(""))
+    // )
+    dig 5
+    len
+    pushint 26 // 26
+    +
+    dup
+    itob
+    extract 6 2
+    bytec_1 // 0x001a
+    swap
+    concat
+    dig 6
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 5
+    len
+    uncover 2
+    +
+    swap
+    uncover 4
+    concat
+    uncover 3
+    concat
+    dig 1
+    itob
+    extract 6 2
+    concat
+    dig 2
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/food_safety/contract.py:41
+    // inspection_report_hash=ARC4String(String(""))
+    pushbytes 0x0000
+    // smart_contracts/food_safety/contract.py:34-42
+    // record = BatchRecord(
+    //     producer=ARC4String(producer_address),
+    //     product_name=ARC4String(product_name),
+    //     origin_location=ARC4String(origin_location),
+    //     harvest_date=ARC4UInt64(harvest_date),
+    //     status=ARC4UInt64(UInt64(0)),
+    //     ipfs_hash=ARC4String(ipfs_hash),
+    //     inspection_report_hash=ARC4String(String(""))
+    // )
+    concat
+    // smart_contracts/food_safety/contract.py:43
+    // self.batches[batch_id] = record.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+    retsub
+
+
+// smart_contracts.food_safety.contract.FoodSafetyApp.inspect_batch(batch_id: bytes, inspection_report_hash: bytes, approved: uint64) -> void:
+inspect_batch:
+    // smart_contracts/food_safety/contract.py:45-46
+    // @abimethod()
+    // def inspect_batch(self, batch_id: String, inspection_report_hash: String, approved: UInt64) -> None:
+    proto 3 0
+    // smart_contracts/food_safety/contract.py:48-49
+    // # Access maybe result directly to avoid mutable reference assignment
+    // assert self.batches.maybe(batch_id)[1], "Batch does not exist"
+    bytec_0 // "batches"
+    frame_dig -3
+    concat
+    dupn 2
+    box_get
+    bury 1
+    assert // Batch does not exist
+    // smart_contracts/food_safety/contract.py:50
+    // current = self.batches.maybe(batch_id)[0].copy()
+    box_get
+    pop
+    dup
+    // smart_contracts/food_safety/contract.py:52
+    // assert current.status.native == UInt64(0), "Batch not in CREATED state"
+    pushint 14 // 14
+    extract_uint64
+    !
+    assert // Batch not in CREATED state
+    // smart_contracts/food_safety/contract.py:54
+    // new_status = ARC4UInt64(UInt64(2)) if approved != UInt64(0) else ARC4UInt64(UInt64(3))
+    frame_dig -1
+    bz inspect_batch_ternary_false@2
+    intc_2 // 2
+    itob
+
+inspect_batch_ternary_merge@3:
+    // smart_contracts/food_safety/contract.py:56
+    // producer=current.producer,
+    frame_dig 1
+    dup
+    intc_0 // 0
+    extract_uint16
+    dig 1
+    intc_2 // 2
+    extract_uint16
+    dig 2
+    uncover 2
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:57
+    // product_name=current.product_name,
+    dig 2
+    intc_3 // 4
+    extract_uint16
+    dig 3
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:58
+    // origin_location=current.origin_location,
+    dig 3
+    pushint 22 // 22
+    extract_uint16
+    dig 4
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:59
+    // harvest_date=current.harvest_date,
+    dig 4
+    extract 6 8 // on error: Index access is out of bounds
+    // smart_contracts/food_safety/contract.py:61
+    // ipfs_hash=current.ipfs_hash,
+    dig 5
+    pushint 24 // 24
+    extract_uint16
+    uncover 6
+    uncover 4
+    uncover 2
+    substring3
+    // smart_contracts/food_safety/contract.py:62
+    // inspection_report_hash=ARC4String(inspection_report_hash)
+    frame_dig -2
+    len
+    itob
+    extract 6 2
+    frame_dig -2
+    concat
+    // smart_contracts/food_safety/contract.py:55-63
+    // updated = BatchRecord(
+    //     producer=current.producer,
+    //     product_name=current.product_name,
+    //     origin_location=current.origin_location,
+    //     harvest_date=current.harvest_date,
+    //     status=new_status,
+    //     ipfs_hash=current.ipfs_hash,
+    //     inspection_report_hash=ARC4String(inspection_report_hash)
+    // )
+    dig 5
+    len
+    pushint 26 // 26
+    +
+    dup
+    itob
+    extract 6 2
+    bytec_1 // 0x001a
+    swap
+    concat
+    dig 6
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 5
+    len
+    uncover 2
+    +
+    swap
+    uncover 4
+    concat
+    uncover 7
+    concat
+    dig 1
+    itob
+    extract 6 2
+    concat
+    dig 3
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/food_safety/contract.py:64
+    // self.batches[batch_id] = updated.copy()
+    frame_dig 0
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    retsub
+
+inspect_batch_ternary_false@2:
+    // smart_contracts/food_safety/contract.py:54
+    // new_status = ARC4UInt64(UInt64(2)) if approved != UInt64(0) else ARC4UInt64(UInt64(3))
+    pushint 3 // 3
+    itob
+    b inspect_batch_ternary_merge@3
+
+
+// smart_contracts.food_safety.contract.FoodSafetyApp.distribute_batch(batch_id: bytes) -> void:
+distribute_batch:
+    // smart_contracts/food_safety/contract.py:66-67
+    // @abimethod()
+    // def distribute_batch(self, batch_id: String) -> None:
+    proto 1 0
+    // smart_contracts/food_safety/contract.py:68-69
+    // # Access maybe result directly to avoid mutable reference assignment
+    // assert self.batches.maybe(batch_id)[1], "Batch does not exist"
+    bytec_0 // "batches"
+    frame_dig -1
+    concat
+    dup
+    box_get
+    bury 1
+    assert // Batch does not exist
+    // smart_contracts/food_safety/contract.py:70
+    // current = self.batches.maybe(batch_id)[0].copy()
+    dup
+    box_get
+    pop
+    // smart_contracts/food_safety/contract.py:71
+    // assert current.status.native == UInt64(2), "Batch not APPROVED"
+    dup
+    pushint 14 // 14
+    extract_uint64
+    intc_2 // 2
+    ==
+    assert // Batch not APPROVED
+    // smart_contracts/food_safety/contract.py:73
+    // producer=current.producer,
+    dup
+    intc_0 // 0
+    extract_uint16
+    dig 1
+    intc_2 // 2
+    extract_uint16
+    dig 2
+    uncover 2
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:74
+    // product_name=current.product_name,
+    dig 2
+    intc_3 // 4
+    extract_uint16
+    dig 3
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:75
+    // origin_location=current.origin_location,
+    dig 3
+    pushint 22 // 22
+    extract_uint16
+    dig 4
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:76
+    // harvest_date=current.harvest_date,
+    dig 4
+    extract 6 8 // on error: Index access is out of bounds
+    // smart_contracts/food_safety/contract.py:77
+    // status=ARC4UInt64(UInt64(4)),
+    intc_3 // 4
+    itob
+    // smart_contracts/food_safety/contract.py:78
+    // ipfs_hash=current.ipfs_hash,
+    dig 6
+    pushint 24 // 24
+    extract_uint16
+    dig 7
+    uncover 5
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:79
+    // inspection_report_hash=current.inspection_report_hash
+    dig 7
+    len
+    uncover 8
+    uncover 3
+    uncover 2
+    substring3
+    // smart_contracts/food_safety/contract.py:72-80
+    // updated = BatchRecord(
+    //     producer=current.producer,
+    //     product_name=current.product_name,
+    //     origin_location=current.origin_location,
+    //     harvest_date=current.harvest_date,
+    //     status=ARC4UInt64(UInt64(4)),
+    //     ipfs_hash=current.ipfs_hash,
+    //     inspection_report_hash=current.inspection_report_hash
+    // )
+    dig 6
+    len
+    pushint 26 // 26
+    +
+    dup
+    itob
+    extract 6 2
+    bytec_1 // 0x001a
+    swap
+    concat
+    dig 7
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 6
+    len
+    uncover 2
+    +
+    swap
+    uncover 5
+    concat
+    uncover 4
+    concat
+    dig 1
+    itob
+    extract 6 2
+    concat
+    dig 3
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/food_safety/contract.py:81
+    // self.batches[batch_id] = updated.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+    retsub
+
+
+// smart_contracts.food_safety.contract.FoodSafetyApp.recall_batch(batch_id: bytes, reason_hash: bytes) -> void:
+recall_batch:
+    // smart_contracts/food_safety/contract.py:83-84
+    // @abimethod()
+    // def recall_batch(self, batch_id: String, reason_hash: String) -> None:
+    proto 2 0
+    // smart_contracts/food_safety/contract.py:85
+    // assert Txn.sender == self.creator, "Only contract creator can recall"
+    txn Sender
+    intc_0 // 0
+    bytec_2 // "creator"
+    app_global_get_ex
+    assert // check self.creator exists
+    ==
+    assert // Only contract creator can recall
+    // smart_contracts/food_safety/contract.py:86-87
+    // # Access maybe result directly to avoid mutable reference assignment
+    // assert self.batches.maybe(batch_id)[1], "Batch does not exist"
+    bytec_0 // "batches"
+    frame_dig -2
+    concat
+    dup
+    box_get
+    bury 1
+    assert // Batch does not exist
+    // smart_contracts/food_safety/contract.py:88
+    // current = self.batches.maybe(batch_id)[0].copy()
+    dup
+    box_get
+    pop
+    // smart_contracts/food_safety/contract.py:90
+    // producer=current.producer,
+    dup
+    intc_0 // 0
+    extract_uint16
+    dig 1
+    intc_2 // 2
+    extract_uint16
+    dig 2
+    uncover 2
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:91
+    // product_name=current.product_name,
+    dig 2
+    intc_3 // 4
+    extract_uint16
+    dig 3
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:92
+    // origin_location=current.origin_location,
+    dig 3
+    pushint 22 // 22
+    extract_uint16
+    dig 4
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/food_safety/contract.py:93
+    // harvest_date=current.harvest_date,
+    dig 4
+    extract 6 8 // on error: Index access is out of bounds
+    // smart_contracts/food_safety/contract.py:94
+    // status=ARC4UInt64(UInt64(5)),
+    pushint 5 // 5
+    itob
+    // smart_contracts/food_safety/contract.py:95
+    // ipfs_hash=current.ipfs_hash,
+    dig 6
+    pushint 24 // 24
+    extract_uint16
+    uncover 7
+    uncover 5
+    uncover 2
+    substring3
+    // smart_contracts/food_safety/contract.py:96
+    // inspection_report_hash=ARC4String(reason_hash)
+    frame_dig -1
+    len
+    itob
+    extract 6 2
+    frame_dig -1
+    concat
+    // smart_contracts/food_safety/contract.py:89-97
+    // updated = BatchRecord(
+    //     producer=current.producer,
+    //     product_name=current.product_name,
+    //     origin_location=current.origin_location,
+    //     harvest_date=current.harvest_date,
+    //     status=ARC4UInt64(UInt64(5)),
+    //     ipfs_hash=current.ipfs_hash,
+    //     inspection_report_hash=ARC4String(reason_hash)
+    // )
+    dig 6
+    len
+    pushint 26 // 26
+    +
+    dup
+    itob
+    extract 6 2
+    bytec_1 // 0x001a
+    swap
+    concat
+    dig 7
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 6
+    len
+    uncover 2
+    +
+    swap
+    uncover 5
+    concat
+    uncover 4
+    concat
+    dig 1
+    itob
+    extract 6 2
+    concat
+    dig 3
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/food_safety/contract.py:98
+    // self.batches[batch_id] = updated.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+    retsub
+
+
+// smart_contracts.food_safety.contract.FoodSafetyApp.get_batch(batch_id: bytes) -> bytes, bytes, bytes, bytes, uint64, uint64, bytes, bytes:
+get_batch:
+    // smart_contracts/food_safety/contract.py:100-101
+    // @abimethod(readonly=True)
+    // def get_batch(self, batch_id: String) -> Tuple[String, String, String, String, UInt64, UInt64, String, String]:
+    proto 1 8
+    // smart_contracts/food_safety/contract.py:102-103
+    // # Access maybe result directly to avoid mutable reference assignment
+    // assert self.batches.maybe(batch_id)[1], "Batch does not exist"
+    bytec_0 // "batches"
+    frame_dig -1
+    concat
+    dup
+    box_get
+    bury 1
+    assert // Batch does not exist
+    // smart_contracts/food_safety/contract.py:104
+    // current = self.batches.maybe(batch_id)[0].copy()
+    box_get
+    pop
+    // smart_contracts/food_safety/contract.py:105-106
+    // # return (batch_id, producer_address_string, product_name, origin_location, harvest_date, status, ipfs_hash, inspection_report_hash)
+    // return (batch_id, current.producer.native, current.product_name.native, current.origin_location.native, current.harvest_date.native, current.status.native, current.ipfs_hash.native, current.inspection_report_hash.native)
+    dup
+    intc_0 // 0
+    extract_uint16
+    dig 1
+    intc_2 // 2
+    extract_uint16
+    dig 2
+    uncover 2
+    dig 2
+    substring3
+    extract 2 0
+    dig 2
+    intc_3 // 4
+    extract_uint16
+    dig 3
+    uncover 3
+    dig 2
+    substring3
+    extract 2 0
+    dig 3
+    pushint 22 // 22
+    extract_uint16
+    dig 4
+    uncover 3
+    dig 2
+    substring3
+    extract 2 0
+    dig 4
+    pushint 6 // 6
+    extract_uint64
+    dig 5
+    pushint 14 // 14
+    extract_uint64
+    dig 6
+    pushint 24 // 24
+    extract_uint16
+    dig 7
+    uncover 5
+    dig 2
+    substring3
+    extract 2 0
+    dig 7
+    len
+    uncover 8
+    uncover 3
+    uncover 2
+    substring3
+    extract 2 0
+    frame_dig -1
+    cover 7
+    retsub

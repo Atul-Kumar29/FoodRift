@@ -10,6 +10,19 @@ const ConnectWallet = ({ openModal, closeModal }: ConnectWalletInterface) => {
   const { wallets, activeAddress } = useWallet()
 
   const isKmd = (wallet: Wallet) => wallet.id === WalletId.KMD
+  const isPera = (wallet: Wallet) => wallet.id === WalletId.PERA
+
+  const getWalletDisplayName = (wallet: Wallet) => {
+    if (isKmd(wallet)) return 'Local Wallet'
+    if (isPera(wallet)) return 'Pera Wallet'
+    return wallet.metadata.name
+  }
+
+  const getWalletDescription = (wallet: Wallet) => {
+    if (isKmd(wallet)) return 'Development wallet (LocalNet)'
+    if (isPera(wallet)) return 'Mobile and web wallet'
+    return ''
+  }
 
   return (
     <dialog id="connect_wallet_modal" className={`modal ${openModal ? 'modal-open' : ''}`}>
@@ -28,20 +41,31 @@ const ConnectWallet = ({ openModal, closeModal }: ConnectWalletInterface) => {
             wallets?.map((wallet) => (
               <button
                 data-test-id={`${wallet.id}-connect`}
-                className="btn border-teal-800 border-1  m-2"
+                className="btn border-teal-800 border-1 m-2 h-auto py-4 flex flex-col items-start justify-start"
                 key={`provider-${wallet.id}`}
                 onClick={() => {
                   return wallet.connect()
                 }}
               >
-                {!isKmd(wallet) && (
-                  <img
-                    alt={`wallet_icon_${wallet.id}`}
-                    src={wallet.metadata.icon}
-                    style={{ objectFit: 'contain', width: '30px', height: 'auto' }}
-                  />
-                )}
-                <span>{isKmd(wallet) ? 'LocalNet Wallet' : wallet.metadata.name}</span>
+                <div className="flex items-center gap-3 w-full">
+                  {isKmd(wallet) ? (
+                    <div className="w-[30px] h-[30px] flex items-center justify-center text-2xl">
+                      💼
+                    </div>
+                  ) : (
+                    <img
+                      alt={`wallet_icon_${wallet.id}`}
+                      src={wallet.metadata.icon}
+                      style={{ objectFit: 'contain', width: '30px', height: '30px' }}
+                    />
+                  )}
+                  <div className="flex flex-col items-start">
+                    <span className="font-semibold">{getWalletDisplayName(wallet)}</span>
+                    {getWalletDescription(wallet) && (
+                      <span className="text-xs opacity-70 font-normal">{getWalletDescription(wallet)}</span>
+                    )}
+                  </div>
+                </div>
               </button>
             ))}
         </div>

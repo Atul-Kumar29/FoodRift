@@ -24,7 +24,7 @@ import { SendParams, SendSingleTransactionResult, SendAtomicTransactionComposerR
 import { Address, encodeAddress, modelsv2, OnApplicationComplete, Transaction, TransactionSigner } from 'algosdk'
 import SimulateResponse = modelsv2.SimulateResponse
 
-export const APP_SPEC: Arc56Contract = {"name":"Counter","structs":{},"methods":[{"name":"incr_counter","args":[],"returns":{"type":"uint64"},"actions":{"create":[],"call":["NoOp"]},"readonly":false,"events":[],"recommendations":{}}],"arcs":[22,28],"networks":{},"state":{"schema":{"global":{"ints":1,"bytes":0},"local":{"ints":0,"bytes":0}},"keys":{"global":{"count":{"keyType":"AVMString","valueType":"AVMUint64","key":"Y291bnQ="}},"local":{},"box":{}},"maps":{"global":{},"local":{},"box":{}}},"bareActions":{"create":["NoOp"],"call":[]},"sourceInfo":{"approval":{"sourceInfo":[{"pc":[57],"errorMessage":"OnCompletion must be NoOp && can only call when creating"},{"pc":[46],"errorMessage":"OnCompletion must be NoOp && can only call when not creating"},{"pc":[61],"errorMessage":"check self.count exists"}],"pcOffsetMethod":"none"},"clear":{"sourceInfo":[],"pcOffsetMethod":"none"}},"source":{"approval":"I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBhbGdvcHkuYXJjNC5BUkM0Q29udHJhY3QuYXBwcm92YWxfcHJvZ3JhbSgpIC0+IHVpbnQ2NDoKbWFpbjoKICAgIGludGNibG9jayAwIDEKICAgIGJ5dGVjYmxvY2sgImNvdW50IgogICAgdHhuIEFwcGxpY2F0aW9uSUQKICAgIGJueiBtYWluX2FmdGVyX2lmX2Vsc2VAMgogICAgLy8gc21hcnRfY29udHJhY3RzL2NvdW50ZXIvY29udHJhY3QucHk6MTAKICAgIC8vIHNlbGYuY291bnQgPSBVSW50NjQoMCkKICAgIGJ5dGVjXzAgLy8gImNvdW50IgogICAgaW50Y18wIC8vIDAKICAgIGFwcF9nbG9iYWxfcHV0CgptYWluX2FmdGVyX2lmX2Vsc2VAMjoKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9jb3VudGVyL2NvbnRyYWN0LnB5OjUKICAgIC8vIGNsYXNzIENvdW50ZXIoQVJDNENvbnRyYWN0KToKICAgIHR4biBOdW1BcHBBcmdzCiAgICBieiBtYWluX19fYWxnb3B5X2RlZmF1bHRfY3JlYXRlQDcKICAgIHB1c2hieXRlcyAweDM2ZTcyOTI0IC8vIG1ldGhvZCAiaW5jcl9jb3VudGVyKCl1aW50NjQiCiAgICB0eG5hIEFwcGxpY2F0aW9uQXJncyAwCiAgICBtYXRjaCBtYWluX2luY3JfY291bnRlcl9yb3V0ZUA1CiAgICBlcnIKCm1haW5faW5jcl9jb3VudGVyX3JvdXRlQDU6CiAgICAvLyBzbWFydF9jb250cmFjdHMvY291bnRlci9jb250cmFjdC5weToxNgogICAgLy8gQGFiaW1ldGhvZCgpCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgJiYKICAgIGFzc2VydCAvLyBPbkNvbXBsZXRpb24gbXVzdCBiZSBOb09wICYmIGNhbiBvbmx5IGNhbGwgd2hlbiBub3QgY3JlYXRpbmcKICAgIGIgaW5jcl9jb3VudGVyCgptYWluX19fYWxnb3B5X2RlZmF1bHRfY3JlYXRlQDc6CiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgIQogICAgJiYKICAgIHJldHVybiAvLyBvbiBlcnJvcjogT25Db21wbGV0aW9uIG11c3QgYmUgTm9PcCAmJiBjYW4gb25seSBjYWxsIHdoZW4gY3JlYXRpbmcKCgovLyBzbWFydF9jb250cmFjdHMuY291bnRlci5jb250cmFjdC5Db3VudGVyLmluY3JfY291bnRlcltyb3V0aW5nXSgpIC0+IHZvaWQ6CmluY3JfY291bnRlcjoKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9jb3VudGVyL2NvbnRyYWN0LnB5OjE4CiAgICAvLyBzZWxmLmNvdW50ICs9IFVJbnQ2NCgxKQogICAgaW50Y18wIC8vIDAKICAgIGJ5dGVjXzAgLy8gImNvdW50IgogICAgYXBwX2dsb2JhbF9nZXRfZXgKICAgIGFzc2VydCAvLyBjaGVjayBzZWxmLmNvdW50IGV4aXN0cwogICAgaW50Y18xIC8vIDEKICAgICsKICAgIGJ5dGVjXzAgLy8gImNvdW50IgogICAgZGlnIDEKICAgIGFwcF9nbG9iYWxfcHV0CiAgICAvLyBzbWFydF9jb250cmFjdHMvY291bnRlci9jb250cmFjdC5weToxNgogICAgLy8gQGFiaW1ldGhvZCgpCiAgICBpdG9iCiAgICBwdXNoYnl0ZXMgMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMSAvLyAxCiAgICByZXR1cm4K","clear":"I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBhbGdvcHkuYXJjNC5BUkM0Q29udHJhY3QuY2xlYXJfc3RhdGVfcHJvZ3JhbSgpIC0+IHVpbnQ2NDoKbWFpbjoKICAgIHB1c2hpbnQgMSAvLyAxCiAgICByZXR1cm4K"},"byteCode":{"approval":"CyACAAEmAQVjb3VudDEYQAADKCJnMRtBABiABDbnKSQ2GgCOAQABADEZFDEYEERCAAgxGRQxGBQQQyIoZUQjCChLAWcWgAQVH3x1TFCwI0M=","clear":"C4EBQw=="},"compilerInfo":{"compiler":"puya","compilerVersion":{"major":5,"minor":2,"patch":0}},"events":[],"templateVariables":{}} as unknown as Arc56Contract
+export const APP_SPEC: Arc56Contract = {"name":"Counter","structs":{},"methods":[{"name":"incr_counter","args":[],"returns":{"type":"uint64"},"actions":{"create":[],"call":["NoOp"]},"readonly":false,"events":[],"recommendations":{}},{"name":"get_all_fields","args":[],"returns":{"type":"uint64"},"actions":{"create":[],"call":["NoOp"]},"readonly":true,"desc":"Returns all stored global fields for this contract.","events":[],"recommendations":{}}],"arcs":[22,28],"networks":{},"state":{"schema":{"global":{"ints":1,"bytes":0},"local":{"ints":0,"bytes":0}},"keys":{"global":{"count":{"keyType":"AVMString","valueType":"AVMUint64","key":"Y291bnQ="}},"local":{},"box":{}},"maps":{"global":{},"local":{},"box":{}}},"bareActions":{"create":["NoOp"],"call":[]},"sourceInfo":{"approval":{"sourceInfo":[{"pc":[57,74],"errorMessage":"OnCompletion is not NoOp"},{"pc":[96],"errorMessage":"can only call when creating"},{"pc":[60,77],"errorMessage":"can only call when not creating"},{"pc":[102,111,116],"errorMessage":"check self.count exists"}],"pcOffsetMethod":"none"},"clear":{"sourceInfo":[],"pcOffsetMethod":"none"}},"source":{"approval":"I3ByYWdtYSB2ZXJzaW9uIDEwCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBzbWFydF9jb250cmFjdHMuY291bnRlci5jb250cmFjdC5Db3VudGVyLl9fYWxnb3B5X2VudHJ5cG9pbnRfd2l0aF9pbml0KCkgLT4gdWludDY0OgptYWluOgogICAgaW50Y2Jsb2NrIDAgMQogICAgYnl0ZWNibG9jayAiY291bnQiIDB4MTUxZjdjNzUKICAgIHR4biBBcHBsaWNhdGlvbklECiAgICBibnogbWFpbl9hZnRlcl9pZl9lbHNlQDIKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9jb3VudGVyL2NvbnRyYWN0LnB5OjEwCiAgICAvLyBzZWxmLmNvdW50ID0gVUludDY0KDApCiAgICBieXRlY18wIC8vICJjb3VudCIKICAgIGludGNfMCAvLyAwCiAgICBhcHBfZ2xvYmFsX3B1dAoKbWFpbl9hZnRlcl9pZl9lbHNlQDI6CiAgICAvLyBzbWFydF9jb250cmFjdHMvY291bnRlci9jb250cmFjdC5weTo1CiAgICAvLyBjbGFzcyBDb3VudGVyKEFSQzRDb250cmFjdCk6CiAgICB0eG4gTnVtQXBwQXJncwogICAgYnogbWFpbl9iYXJlX3JvdXRpbmdANwogICAgcHVzaGJ5dGVzcyAweDM2ZTcyOTI0IDB4NzcwNDAyMTIgLy8gbWV0aG9kICJpbmNyX2NvdW50ZXIoKXVpbnQ2NCIsIG1ldGhvZCAiZ2V0X2FsbF9maWVsZHMoKXVpbnQ2NCIKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDAKICAgIG1hdGNoIG1haW5faW5jcl9jb3VudGVyX3JvdXRlQDUgbWFpbl9nZXRfYWxsX2ZpZWxkc19yb3V0ZUA2CgptYWluX2FmdGVyX2lmX2Vsc2VAOToKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9jb3VudGVyL2NvbnRyYWN0LnB5OjUKICAgIC8vIGNsYXNzIENvdW50ZXIoQVJDNENvbnRyYWN0KToKICAgIGludGNfMCAvLyAwCiAgICByZXR1cm4KCm1haW5fZ2V0X2FsbF9maWVsZHNfcm91dGVANjoKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9jb3VudGVyL2NvbnRyYWN0LnB5OjE3CiAgICAvLyBAYWJpbWV0aG9kKHJlYWRvbmx5PVRydWUpCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIGlzIG5vdCBOb09wCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgYXNzZXJ0IC8vIGNhbiBvbmx5IGNhbGwgd2hlbiBub3QgY3JlYXRpbmcKICAgIGNhbGxzdWIgZ2V0X2FsbF9maWVsZHMKICAgIGl0b2IKICAgIGJ5dGVjXzEgLy8gMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMSAvLyAxCiAgICByZXR1cm4KCm1haW5faW5jcl9jb3VudGVyX3JvdXRlQDU6CiAgICAvLyBzbWFydF9jb250cmFjdHMvY291bnRlci9jb250cmFjdC5weToxMgogICAgLy8gQGFiaW1ldGhvZCgpCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIGlzIG5vdCBOb09wCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgYXNzZXJ0IC8vIGNhbiBvbmx5IGNhbGwgd2hlbiBub3QgY3JlYXRpbmcKICAgIGNhbGxzdWIgaW5jcl9jb3VudGVyCiAgICBpdG9iCiAgICBieXRlY18xIC8vIDB4MTUxZjdjNzUKICAgIHN3YXAKICAgIGNvbmNhdAogICAgbG9nCiAgICBpbnRjXzEgLy8gMQogICAgcmV0dXJuCgptYWluX2JhcmVfcm91dGluZ0A3OgogICAgLy8gc21hcnRfY29udHJhY3RzL2NvdW50ZXIvY29udHJhY3QucHk6NQogICAgLy8gY2xhc3MgQ291bnRlcihBUkM0Q29udHJhY3QpOgogICAgdHhuIE9uQ29tcGxldGlvbgogICAgYm56IG1haW5fYWZ0ZXJfaWZfZWxzZUA5CiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgIQogICAgYXNzZXJ0IC8vIGNhbiBvbmx5IGNhbGwgd2hlbiBjcmVhdGluZwogICAgaW50Y18xIC8vIDEKICAgIHJldHVybgoKCi8vIHNtYXJ0X2NvbnRyYWN0cy5jb3VudGVyLmNvbnRyYWN0LkNvdW50ZXIuaW5jcl9jb3VudGVyKCkgLT4gdWludDY0OgppbmNyX2NvdW50ZXI6CiAgICAvLyBzbWFydF9jb250cmFjdHMvY291bnRlci9jb250cmFjdC5weToxNAogICAgLy8gc2VsZi5jb3VudCArPSBVSW50NjQoMSkKICAgIGludGNfMCAvLyAwCiAgICBieXRlY18wIC8vICJjb3VudCIKICAgIGFwcF9nbG9iYWxfZ2V0X2V4CiAgICBhc3NlcnQgLy8gY2hlY2sgc2VsZi5jb3VudCBleGlzdHMKICAgIGludGNfMSAvLyAxCiAgICArCiAgICBieXRlY18wIC8vICJjb3VudCIKICAgIHN3YXAKICAgIGFwcF9nbG9iYWxfcHV0CiAgICAvLyBzbWFydF9jb250cmFjdHMvY291bnRlci9jb250cmFjdC5weToxNQogICAgLy8gcmV0dXJuIHNlbGYuY291bnQKICAgIGludGNfMCAvLyAwCiAgICBieXRlY18wIC8vICJjb3VudCIKICAgIGFwcF9nbG9iYWxfZ2V0X2V4CiAgICBhc3NlcnQgLy8gY2hlY2sgc2VsZi5jb3VudCBleGlzdHMKICAgIHJldHN1YgoKCi8vIHNtYXJ0X2NvbnRyYWN0cy5jb3VudGVyLmNvbnRyYWN0LkNvdW50ZXIuZ2V0X2FsbF9maWVsZHMoKSAtPiB1aW50NjQ6CmdldF9hbGxfZmllbGRzOgogICAgLy8gc21hcnRfY29udHJhY3RzL2NvdW50ZXIvY29udHJhY3QucHk6MjAKICAgIC8vIHJldHVybiBzZWxmLmNvdW50CiAgICBpbnRjXzAgLy8gMAogICAgYnl0ZWNfMCAvLyAiY291bnQiCiAgICBhcHBfZ2xvYmFsX2dldF9leAogICAgYXNzZXJ0IC8vIGNoZWNrIHNlbGYuY291bnQgZXhpc3RzCiAgICByZXRzdWIK","clear":"I3ByYWdtYSB2ZXJzaW9uIDEwCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBhbGdvcHkuYXJjNC5BUkM0Q29udHJhY3QuY2xlYXJfc3RhdGVfcHJvZ3JhbSgpIC0+IHVpbnQ2NDoKbWFpbjoKICAgIHB1c2hpbnQgMSAvLyAxCiAgICByZXR1cm4K"},"byteCode":{"approval":"CiACAAEmAgVjb3VudAQVH3x1MRhAAAMoImcxG0EAOYICBDbnKSQEdwQCEjYaAI4CABMAAiJDMRkURDEYRIgAMRYpTFCwI0MxGRREMRhEiAASFilMULAjQzEZQP/XMRgURCNDIihlRCMIKExnIihlRIkiKGVEiQ==","clear":"CoEBQw=="},"compilerInfo":{"compiler":"puya","compilerVersion":{"major":4,"minor":7,"patch":0}},"events":[],"templateVariables":{}} as unknown as Arc56Contract
 
 /**
  * A state record containing binary data
@@ -72,12 +72,14 @@ export type CounterArgs = {
    */
   obj: {
     'incr_counter()uint64': Record<string, never>
+    'get_all_fields()uint64': Record<string, never>
   }
   /**
    * The tuple representation of the arguments for each method
    */
   tuple: {
     'incr_counter()uint64': []
+    'get_all_fields()uint64': []
   }
 }
 
@@ -86,6 +88,7 @@ export type CounterArgs = {
  */
 export type CounterReturns = {
   'incr_counter()uint64': bigint
+  'get_all_fields()uint64': bigint
 }
 
 /**
@@ -100,6 +103,11 @@ export type CounterTypes = {
       argsObj: CounterArgs['obj']['incr_counter()uint64']
       argsTuple: CounterArgs['tuple']['incr_counter()uint64']
       returns: CounterReturns['incr_counter()uint64']
+    }>
+    & Record<'get_all_fields()uint64' | 'get_all_fields', {
+      argsObj: CounterArgs['obj']['get_all_fields()uint64']
+      argsTuple: CounterArgs['tuple']['get_all_fields()uint64']
+      returns: CounterReturns['get_all_fields()uint64']
     }>
   /**
    * Defines the shape of the state of the application.
@@ -177,6 +185,21 @@ export abstract class CounterParamsFactory {
     return {
       ...params,
       method: 'incr_counter()uint64' as const,
+      args: Array.isArray(params.args) ? params.args : [],
+    }
+  }
+  /**
+   * Constructs a no op call for the get_all_fields()uint64 ABI method
+   *
+   * Returns all stored global fields for this contract.
+   *
+   * @param params Parameters for the call
+   * @returns An `AppClientMethodCallParams` object for the call
+   */
+  static getAllFields(params: CallParams<CounterArgs['obj']['get_all_fields()uint64'] | CounterArgs['tuple']['get_all_fields()uint64']> & CallOnComplete): AppClientMethodCallParams & CallOnComplete {
+    return {
+      ...params,
+      method: 'get_all_fields()uint64' as const,
       args: Array.isArray(params.args) ? params.args : [],
     }
   }
@@ -430,6 +453,20 @@ export class CounterClient {
       return this.appClient.params.call(CounterParamsFactory.incrCounter(params))
     },
 
+    /**
+     * Makes a call to the Counter smart contract using the `get_all_fields()uint64` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * Returns all stored global fields for this contract.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call params
+     */
+    getAllFields: (params: CallParams<CounterArgs['obj']['get_all_fields()uint64'] | CounterArgs['tuple']['get_all_fields()uint64']> & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      return this.appClient.params.call(CounterParamsFactory.getAllFields(params))
+    },
+
   }
 
   /**
@@ -454,6 +491,20 @@ export class CounterClient {
      */
     incrCounter: (params: CallParams<CounterArgs['obj']['incr_counter()uint64'] | CounterArgs['tuple']['incr_counter()uint64']> & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
       return this.appClient.createTransaction.call(CounterParamsFactory.incrCounter(params))
+    },
+
+    /**
+     * Makes a call to the Counter smart contract using the `get_all_fields()uint64` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * Returns all stored global fields for this contract.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call transaction
+     */
+    getAllFields: (params: CallParams<CounterArgs['obj']['get_all_fields()uint64'] | CounterArgs['tuple']['get_all_fields()uint64']> & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      return this.appClient.createTransaction.call(CounterParamsFactory.getAllFields(params))
     },
 
   }
@@ -483,6 +534,21 @@ export class CounterClient {
       return {...result, return: result.return as unknown as (undefined | CounterReturns['incr_counter()uint64'])}
     },
 
+    /**
+     * Makes a call to the Counter smart contract using the `get_all_fields()uint64` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * Returns all stored global fields for this contract.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call result
+     */
+    getAllFields: async (params: CallParams<CounterArgs['obj']['get_all_fields()uint64'] | CounterArgs['tuple']['get_all_fields()uint64']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      const result = await this.appClient.send.call(CounterParamsFactory.getAllFields(params))
+      return {...result, return: result.return as unknown as (undefined | CounterReturns['get_all_fields()uint64'])}
+    },
+
   }
 
   /**
@@ -493,6 +559,21 @@ export class CounterClient {
    */
   public clone(params: CloneAppClientParams) {
     return new CounterClient(this.appClient.clone(params))
+  }
+
+  /**
+   * Makes a readonly (simulated) call to the Counter smart contract using the `get_all_fields()uint64` ABI method.
+   * 
+   * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+   *
+   * Returns all stored global fields for this contract.
+   *
+   * @param params The params for the smart contract call
+   * @returns The call result
+   */
+  async getAllFields(params: CallParams<CounterArgs['obj']['get_all_fields()uint64'] | CounterArgs['tuple']['get_all_fields()uint64']> = {args: []}) {
+    const result = await this.appClient.send.call(CounterParamsFactory.getAllFields(params))
+    return result.return as unknown as CounterReturns['get_all_fields()uint64']
   }
 
   /**
@@ -531,6 +612,14 @@ export class CounterClient {
       incrCounter(params: CallParams<CounterArgs['obj']['incr_counter()uint64'] | CounterArgs['tuple']['incr_counter()uint64']> & {onComplete?: OnApplicationComplete.NoOpOC}) {
         promiseChain = promiseChain.then(async () => composer.addAppCallMethodCall(await client.params.incrCounter(params)))
         resultMappers.push((v) => client.decodeReturnValue('incr_counter()uint64', v))
+        return this
+      },
+      /**
+       * Add a get_all_fields()uint64 method call against the Counter contract
+       */
+      getAllFields(params: CallParams<CounterArgs['obj']['get_all_fields()uint64'] | CounterArgs['tuple']['get_all_fields()uint64']> & {onComplete?: OnApplicationComplete.NoOpOC}) {
+        promiseChain = promiseChain.then(async () => composer.addAppCallMethodCall(await client.params.getAllFields(params)))
+        resultMappers.push((v) => client.decodeReturnValue('get_all_fields()uint64', v))
         return this
       },
       /**
@@ -576,6 +665,17 @@ export type CounterComposer<TReturns extends [...any[]] = []> = {
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
   incrCounter(params?: CallParams<CounterArgs['obj']['incr_counter()uint64'] | CounterArgs['tuple']['incr_counter()uint64']>): CounterComposer<[...TReturns, CounterReturns['incr_counter()uint64'] | undefined]>
+
+  /**
+   * Calls the get_all_fields()uint64 ABI method.
+   *
+   * Returns all stored global fields for this contract.
+   *
+   * @param args The arguments for the contract call
+   * @param params Any additional parameters for the call
+   * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
+   */
+  getAllFields(params?: CallParams<CounterArgs['obj']['get_all_fields()uint64'] | CounterArgs['tuple']['get_all_fields()uint64']>): CounterComposer<[...TReturns, CounterReturns['get_all_fields()uint64'] | undefined]>
 
   /**
    * Makes a clear_state call to an existing instance of the Counter smart contract.

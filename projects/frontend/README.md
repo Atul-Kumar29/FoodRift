@@ -1,124 +1,500 @@
-# OnChain-Counter-frontend
+# AgriTrust Frontend
 
-This starter React project has been generated using AlgoKit. See below for default getting started instructions.
+React-based frontend application for the AgriTrust blockchain food safety and traceability system.
 
-# Setup
+## Overview
 
-### Initial Setup
+This frontend provides a user interface for interacting with the FoodSafetyApp smart contract on Algorand. It enables users to manage food batch lifecycles, upload documents to IPFS, and connect using multiple wallet providers.
 
-#### 1. Clone the Repository
-Start by cloning this repository to your local machine.
+## Features
 
-#### 2. Install Pre-requisites
-Ensure the following pre-requisites are installed and properly configured:
+- **Food Safety Operations**: Create, inspect, distribute, and recall food batches
+- **Wallet Integration**: Support for Pera Wallet and Local Wallet (KMD)
+- **IPFS Document Storage**: Upload and view inspection documents and batch information
+- **Real-time Updates**: Query batch information and view transaction history
+- **Responsive Design**: Mobile-friendly interface built with Tailwind CSS
 
-- **npm**: Node package manager. Install from [Node.js Installation Guide](https://nodejs.org/en/download/). Verify with `npm -v` to see version `18.12`+.
-- **AlgoKit CLI**: Essential for project setup and operations. Install the latest version from [AlgoKit CLI Installation Guide](https://github.com/algorandfoundation/algokit-cli#install). Verify installation with `algokit --version`, expecting `2.0.0` or later.
+---
 
-#### 3. Bootstrap Your Local Environment
-Run the following commands within the project folder:
+## Setup
 
-- **Install Project Dependencies**: With `algokit project bootstrap all`, ensure all dependencies are ready.
+### Prerequisites
 
-### Development Workflow
+- **Node.js**: Version 18+ required. Verify with `npm -v`
+- **AlgoKit CLI**: Version 2.0.0+. Install from [AlgoKit CLI Installation Guide](https://github.com/algorandfoundation/algokit-cli#install)
 
-#### Terminal
-Directly manage and interact with your project using AlgoKit commands:
+### Installation
 
-1. **Build Contracts**: `algokit project run build` builds react web app and links with smart contracts in workspace, if any.
-2. Remaining set of command for linting, testing and deployment can be found in respective [package.json](./package.json) file and [.algokit.toml](./.algokit.toml) files.
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
+   cd projects/frontend
+   ```
 
-#### VS Code
-For a seamless experience with breakpoint debugging and other features:
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+   
+   Or using AlgoKit from the workspace root:
+   ```bash
+   algokit project bootstrap all
+   ```
 
-1. **Open Project**: In VS Code, open the repository root.
-2. **Install Extensions**: Follow prompts to install recommended extensions.
-3. **Debugging**:
-   - Use `F5` to start debugging.
-   - **Windows Users**: Select the Python interpreter at `./.venv/Scripts/python.exe` via `Ctrl/Cmd + Shift + P` > `Python: Select Interpreter` before the first run.
+3. **Configure Environment**
+   
+   Create a `.env` file based on `.env.template`:
+   ```bash
+   cp .env.template .env
+   ```
+   
+   Edit `.env` with your configuration (see Environment Variables section below)
 
-#### Other IDEs
-While primarily optimized for VS Code, Jetbrains WebStorm has base support for this project:
+4. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
+   
+   The application will be available at `http://localhost:5173`
 
-1. **Open Project**: In your JetBrains IDE, open the repository root.
-2. **Automatic Setup**: The IDE should configure the Python interpreter and virtual environment.
-3. **Debugging**: Use `Shift+F10` or `Ctrl+R` to start debugging. Note: Windows users may encounter issues with pre-launch tasks due to a known bug. See [JetBrains forums](https://youtrack.jetbrains.com/issue/IDEA-277486/Shell-script-configuration-cannot-run-as-before-launch-task) for workarounds.
+---
 
-## AlgoKit Workspaces and Project Management
-This project supports both standalone and monorepo setups through AlgoKit workspaces. Leverage [`algokit project run`](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/project/run.md) commands for efficient monorepo project orchestration and management across multiple projects within a workspace.
+## Environment Variables
 
-> Please note, by default frontend is pre configured to run against Algorand LocalNet. If you want to run against TestNet or MainNet, comment out the current environment variable and uncomment the relevant one in [`.env`](.env) file that is created after running bootstrap command and based on [`.env.template`](.env.template).
+The application requires the following environment variables in the `.env` file:
 
-### Continuous Integration
+### Network Configuration
 
-This project uses [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions) to define CI workflows, which are located in the [.github/workflows](`../../.github/workflows`) folder.
+```bash
+# Algod (Algorand node)
+VITE_ALGOD_SERVER=https://testnet-api.algonode.cloud
+VITE_ALGOD_PORT=
+VITE_ALGOD_TOKEN=
+VITE_ALGOD_NETWORK=testnet
 
-For pull requests and pushes to `main` branch against this repository the following checks are automatically performed by GitHub Actions:
+# Indexer (for querying blockchain data)
+VITE_INDEXER_SERVER=https://testnet-idx.algonode.cloud
+VITE_INDEXER_PORT=
+VITE_INDEXER_TOKEN=
+```
 
-- `install`: Installs dependencies using `npm`
-- `lint`: Lints the codebase using `ESLint`
-- `build`: Builds the codebase using `vite`
+### Local Wallet (KMD) - Optional
 
-> Please note, if you instantiated the project via `algokit init` without explicitly specifying the `--no-workspace` flag, we will automatically attempt to move the contents of the `.github` folder to the root of the workspace.
+Only required if using Local Wallet for development:
+
+```bash
+VITE_KMD_SERVER=http://localhost
+VITE_KMD_PORT=4002
+VITE_KMD_TOKEN=a-super-secret-token
+VITE_KMD_WALLET=unencrypted-default-wallet
+VITE_KMD_PASSWORD=some-password
+```
+
+### IPFS Configuration
+
+Required for document uploads:
+
+```bash
+# Pinata JWT token (get from https://app.pinata.cloud/developers/api-keys)
+VITE_PINATA_JWT=eyJhbGciOi...
+
+# Optional: Custom IPFS gateway
+VITE_PINATA_GATEWAY=https://gateway.pinata.cloud/ipfs
+```
+
+**Note:** Restart the dev server after modifying `.env` variables.
+
+---
+
+## Wallet Integration
+
+### Supported Wallets
+
+The application supports two wallet providers:
+
+#### 1. Pera Wallet
+
+**Description:** Mobile and web wallet for Algorand with secure transaction signing.
+
+**Setup:**
+1. Install Pera Wallet from [https://perawallet.app](https://perawallet.app)
+2. Create or import an account
+3. In the app, click "Connect Wallet" and select "Pera Wallet"
+4. Approve the connection in your Pera Wallet app/extension
+
+**Features:**
+- Mobile app (iOS/Android) and browser extension
+- QR code connection
+- Multi-account support
+- Secure key management
+
+#### 2. Local Wallet (KMD)
+
+**Description:** Development wallet using Algorand's Key Management Daemon.
+
+**Setup:**
+1. Start AlgoKit LocalNet: `algokit localnet start`
+2. Configure KMD environment variables in `.env`
+3. In the app, click "Connect Wallet" and select "Local Wallet"
+4. Choose an account from the list
+
+**Features:**
+- Best for local development and testing
+- Fast transaction signing
+- No mobile app required
+- Works with AlgoKit LocalNet
+
+### Wallet Provider Configuration
+
+The wallet providers are configured in `src/App.tsx` using the `@txnlab/use-wallet-react` library:
+
+```typescript
+import { WalletProvider, WalletId } from '@txnlab/use-wallet-react'
+import { PeraWalletConnect } from '@perawallet/connect'
+
+const walletManager = new WalletManager({
+  wallets: [
+    {
+      id: WalletId.PERA,
+      options: { clientStatic: PeraWalletConnect }
+    },
+    {
+      id: WalletId.KMD,
+      options: { /* KMD configuration */ }
+    }
+  ]
+})
+```
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── FoodSafety.tsx        # Main food safety operations
+│   ├── ConnectWallet.tsx     # Wallet connection modal
+│   ├── Account.tsx           # Wallet account display
+│   └── ErrorBoundary.tsx     # Error handling wrapper
+├── contracts/
+│   └── FoodSafetyApp.ts      # Generated contract client
+├── utils/
+│   ├── pinata.ts             # IPFS integration
+│   └── network/
+│       └── getAlgoClientConfigs.ts  # Network configuration
+├── App.tsx                   # Main app component with wallet setup
+├── Home.tsx                  # Landing page
+└── main.tsx                  # Application entry point
+```
+
+---
+
+## Development Workflow
+
+### Build Commands
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Run linting
+npm run lint
+
+# Run tests
+npm test
+
+# Run end-to-end tests
+npm run test:e2e
+```
+
+### AlgoKit Integration
+
+When working in an AlgoKit workspace, you can use:
+
+```bash
+# Build all projects (from workspace root)
+algokit project run build
+
+# Run frontend dev server (from workspace root)
+algokit project run frontend
+```
+
+---
+
+## Smart Contract Integration
+
+### Generated Contract Clients
+
+The frontend uses TypeScript clients generated from smart contract artifacts. These clients are located in `src/contracts/` and provide type-safe interfaces for contract interactions.
+
+**Generating Clients:**
+
+When smart contracts are updated, regenerate the TypeScript clients:
+
+```bash
+algokit generate client
+```
+
+### Contract Operations
+
+The `FoodSafety.tsx` component demonstrates how to interact with the FoodSafetyApp contract:
+
+**Create Batch:**
+```typescript
+await appClient.createBatch({
+  batchId: 'BATCH001',
+  producerAddress: walletAddress,
+  productName: 'Organic Apples',
+  originLocation: 'Farm A',
+  harvestDate: BigInt(Date.now()),
+  ipfsHash: 'QmXxx...'
+})
+```
+
+**Inspect Batch:**
+```typescript
+await appClient.inspectBatch({
+  batchId: 'BATCH001',
+  inspectionReportHash: 'QmYyy...',
+  approved: true
+})
+```
+
+**Query Batch:**
+```typescript
+const batch = await appClient.getBatch({
+  batchId: 'BATCH001'
+})
+```
+
+---
+
+## IPFS Integration
+
+### Pinata Setup
+
+1. Create a Pinata account at [https://app.pinata.cloud](https://app.pinata.cloud)
+2. Generate an API Key/JWT at [https://app.pinata.cloud/developers/api-keys](https://app.pinata.cloud/developers/api-keys)
+3. Add the JWT to `.env` as `VITE_PINATA_JWT`
+
+### Upload Functions
+
+The `src/utils/pinata.ts` file provides utilities for uploading to IPFS:
+
+**Upload File:**
+```typescript
+import { pinFileToIPFS } from './utils/pinata'
+
+const result = await pinFileToIPFS(file)
+console.log('IPFS Hash:', result.IpfsHash)
+```
+
+**Upload JSON:**
+```typescript
+import { pinJSONToIPFS } from './utils/pinata'
+
+const result = await pinJSONToIPFS({ 
+  name: 'Batch Data',
+  data: { /* batch information */ }
+})
+console.log('IPFS Hash:', result.IpfsHash)
+```
+
+### Viewing Documents
+
+IPFS hashes are displayed as clickable links in the UI. The gateway URL is configured via `VITE_PINATA_GATEWAY` or defaults to `https://ipfs.io/ipfs`.
+
+---
+
+## Testing
+
+### Unit Tests
+
+Run unit tests with Jest:
+
+```bash
+npm test
+```
+
+Tests are located in `tests/` and use the `.test.ts` or `.test.tsx` extension.
+
+### End-to-End Tests
+
+Run E2E tests with Playwright:
+
+```bash
+npm run test:e2e
+```
+
+E2E tests are located in `tests/` and use the `.spec.ts` extension.
+
+### Test Configuration
+
+- **Jest Config**: `jest.config.ts`
+- **Playwright Config**: `playwright.config.ts`
+
+---
+
+## Continuous Integration
+
+### GitHub Actions
+
+The project includes CI workflows in `.github/workflows/` that run on pull requests and pushes to `main`:
+
+**Checks:**
+- Install dependencies
+- Lint code with ESLint
+- Build application with Vite
+- Run tests
 
 ### Continuous Deployment
 
-The project template provides base Github Actions workflows for continuous deployment to [Netlify](https://www.netlify.com/) or [Vercel](https://vercel.com/). These workflows are located in the [`.github/workflows`](./.github/workflows) folder.
+The project supports deployment to Netlify or Vercel.
 
-**Please note**: when configuring the github repository for the first time. Depending on selected provider you will need to set the provider secrets in the repository settings. Default setup provided by the template allows you to manage the secrets via environment variables and secrets on your github repository.
+#### Netlify Deployment
 
+1. **Setup:**
+   - Create Netlify account
+   - Generate [Netlify Access Token](https://docs.netlify.com/cli/get-started/#obtain-a-token-in-the-netlify-ui)
+   - Run `netlify login` and `netlify sites:create`
+   - Add `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` to GitHub secrets
 
-#### Setting up environment variables and secrets for webapp deployment
+2. **Environment Variables:**
+   - Configure `VITE_*` environment variables in Netlify site settings
 
-For Vercel:
-1. Retrieve your [Vercel Access Token](https://vercel.com/support/articles/how-do-i-use-a-vercel-api-access-token)
-2. Install the [Vercel CLI](https://vercel.com/cli) and run `vercel login`
-3. Inside your folder, run `vercel link` to create a new Vercel project
-4. Inside the generated `.vercel` folder, save the `projectId` and `orgId` from the `project.json`
-5. Inside GitHub, add `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` as [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
-6. Create an .env file containing ENV vars for the project (pointing to testnet or mainnet), drag and drop the .env file to upload initial batch of default environment variables to your vercel project.
-7. Upon invocation, CD pipeline will pull the VITE_ prefixed environment variables, build the project and deploy to the specified environment.
+3. **Deploy:**
+   - Push to `main` branch triggers automatic deployment
 
-For Netlify:
-1. Retrieve your [Netlify Access Token](https://docs.netlify.com/cli/get-started/#obtain-a-token-in-the-netlify-ui)
-2. Inside your folder run `netlify login`
-3. Inside your folder run `netlify sites:create` to create a new site, obtain NETLIFY_SITE_ID from the output
-4. Inside GitHub, add `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` as [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
-5. Define the VITE_ prefixed environment variables in netlify environment variables under site settings.
-6. Upon invocation, CD pipeline will build the project and deploy to the specified environment.
+#### Vercel Deployment
 
-> If you prefer alternative deployment methods, you can modify the relevant workflow files from the [`.github/workflows`](./.github/workflows) folder or modify deploy scripts in `.algokit.toml`.
+1. **Setup:**
+   - Create Vercel account
+   - Generate [Vercel Access Token](https://vercel.com/support/articles/how-do-i-use-a-vercel-api-access-token)
+   - Run `vercel login` and `vercel link`
+   - Add `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` to GitHub secrets
 
+2. **Environment Variables:**
+   - Upload `.env` file to Vercel project or configure via dashboard
 
-# Algorand Wallet integrations
+3. **Deploy:**
+   - Push to `main` branch triggers automatic deployment
 
-The template comes with [`use-wallet`](https://github.com/txnlab/use-wallet) integration, which provides a React hook for connecting to an Algorand wallet providers. The following wallet providers are included by default:
-- LocalNet:
-- - [KMD/Local Wallet](https://github.com/TxnLab/use-wallet#kmd-algorand-key-management-daemon) - Algorand's Key Management Daemon (KMD) is a service that manages Algorand private keys and signs transactions. Works best with AlgoKit LocalNet and allows you to easily test and interact with your dApps locally.
-- TestNet and others:
-- - [Pera Wallet](https://perawallet.app).
-- - [Defly Wallet](https://defly.app).
-- - [Exodus Wallet](https://www.exodus.com).
-- - [Daffi Wallet](https://www.daffi.me).
+---
 
-Refer to official [`use-wallet`](https://github.com/txnlab/use-wallet) documentation for detailed guidelines on how to integrate with other wallet providers (such as WalletConnect v2). Too see implementation details on the use wallet hook and initialization of extra wallet providers refer to [`App.tsx`](./src/App.tsx).
+## Technology Stack
 
-# Tools
+### Core Technologies
 
-This project makes use of React and Tailwind to provider a base project configuration to develop frontends for your Algorand dApps and interactions with smart contracts. The following tools are in use:
+- **React 18**: UI library
+- **TypeScript**: Type-safe JavaScript
+- **Vite**: Build tool and dev server
 
-- [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts) - Various TypeScript utilities to simplify interactions with Algorand and AlgoKit.
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
-- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
-- [daisyUI](https://daisyui.com/) - A component library for Tailwind CSS.
-- [use-wallet](https://github.com/txnlab/use-wallet) - A React hook for connecting to an Algorand wallet providers.
-- [npm](https://www.npmjs.com/): Node.js package manager
-- [jest](https://jestjs.io/): JavaScript testing framework
-- [playwright](https://playwright.dev/): Browser automation library
-- [Prettier](https://prettier.io/): Opinionated code formatter
-- [ESLint](https://eslint.org/): Tool for identifying and reporting on patterns in JavaScript
-- Github Actions workflows for build validation
-It has also been configured to have a productive dev experience out of the box in [VS Code](https://code.visualstudio.com/), see the [.vscode](./.vscode) folder.
-# Integrating with smart contracts and application clients
+### Styling
 
-Refer to the detailed guidance on [integrating with smart contracts and application clients](./src/contracts/README.md). In essence, for any smart contract codebase generated with AlgoKit or other tools that produce compile contracts into ARC34 compliant app specifications, you can use the `algokit generate` command to generate TypeScript or Python typed client. Once generated simply drag and drop the generated client into `./src/contracts` and import it into your React components as you see fit.
+- **Tailwind CSS**: Utility-first CSS framework
+- **DaisyUI**: Component library for Tailwind
+
+### Algorand Integration
+
+- **@algorandfoundation/algokit-utils**: Algorand utilities
+- **@txnlab/use-wallet-react**: Wallet integration hook
+- **@perawallet/connect**: Pera Wallet provider
+- **algosdk**: Algorand JavaScript SDK
+
+### Additional Libraries
+
+- **notistack**: Toast notifications
+- **react-router-dom**: Routing (if applicable)
+
+### Development Tools
+
+- **ESLint**: Code linting
+- **Prettier**: Code formatting
+- **Jest**: Unit testing
+- **Playwright**: E2E testing
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**"Missing VITE_ALGOD_SERVER"**
+- Ensure `.env` file exists in `projects/frontend`
+- Verify all required variables are set
+- Restart dev server: `npm run dev`
+
+**"Missing VITE_PINATA_JWT"**
+- Generate JWT in Pinata dashboard
+- Add to `.env` as `VITE_PINATA_JWT`
+- Restart dev server
+
+**Wallet Connection Fails**
+- Pera Wallet: Ensure app/extension is installed and on correct network
+- Local Wallet: Verify AlgoKit LocalNet is running (`algokit localnet status`)
+- Check KMD environment variables
+
+**Transaction Fails**
+- Ensure wallet is connected
+- Verify account has sufficient funds
+- Check that contract is deployed and App ID is correct
+- Verify batch is in correct state for the operation
+
+**Build Errors**
+- Clear node_modules: `rm -rf node_modules && npm install`
+- Clear build cache: `rm -rf dist .vite`
+- Verify Node.js version: `node -v` (should be 18+)
+
+---
+
+## AlgoKit Workspaces
+
+This project supports AlgoKit workspaces for monorepo management. Use `algokit project run` commands for orchestration across multiple projects.
+
+**Example Commands:**
+```bash
+# From workspace root
+algokit project run build        # Build all projects
+algokit project run frontend     # Run frontend dev server
+algokit project run test         # Run all tests
+```
+
+---
+
+## Resources
+
+- **AlgoKit Documentation**: [https://github.com/algorandfoundation/algokit-cli](https://github.com/algorandfoundation/algokit-cli)
+- **React Documentation**: [https://react.dev](https://react.dev)
+- **Vite Documentation**: [https://vitejs.dev](https://vitejs.dev)
+- **Tailwind CSS**: [https://tailwindcss.com](https://tailwindcss.com)
+- **use-wallet Documentation**: [https://github.com/txnlab/use-wallet](https://github.com/txnlab/use-wallet)
+- **Pera Wallet**: [https://perawallet.app](https://perawallet.app)
+- **Pinata Documentation**: [https://docs.pinata.cloud](https://docs.pinata.cloud)
+
+---
+
+## Contributing
+
+When contributing to this project:
+
+1. Follow the existing code style
+2. Run linting before committing: `npm run lint`
+3. Add tests for new features
+4. Update documentation as needed
+5. Ensure all tests pass: `npm test`
+
+---
+
+## License
+
+This project is based on the AlgoKit template and follows the same licensing terms.

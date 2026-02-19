@@ -3,11 +3,11 @@
   "sources": [
     "../../bank/contract.py"
   ],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAUQ;AAAqB;AAArB;AANR;;AAAA;;;AAAA;;AAAA;AAAA;AAAA;;AAAA;AAAA;;;;;;;;;;;;AAAA;;;AAAA;;;;;;AAAA;;;;;;;;;AAQK;;;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAGU;AAAA;;AAAoB;;AAApB;AAAP;AACO;AAAA;;AAAA;AAAA;;AAAP;AAEqC;;AAAA;AAApB;AAAA;AAAA;AAAA;AACzB;;;AAC4C;AAAA;;AAAA;AAAhC;AAAA;;AAAA;AAAA;AAIJ;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;AACO;;AAAA;AAAA;AAAA;AAbV;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAUO;;AAAA;AAAA;;AAAA;AAAA;;;;AAKP;;;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAGyC;;AAApB;AAAA;AAAA;AAClB;AAAA;AACA;;AAAA;AACO;AAAA;AAAP;AAEA;AAAsB;;;;;;;;AAAtB;;;AAAqD;;;AAArD;AAEY;AAAA;AAAA;AACpB;;;AAC8B;;AAAlB;;AAZP;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAcqB;;AAAd;;AAAA;AAAA;",
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAWQ;AAAqB;AAArB;AANR;;AAAA;;;AAAA;;;;;;;;;;;;;;;;;AAAA;;;AAAA;;;;;;;;AAAA;;AAyCK;;AAAA;AAAA;AAAA;;AAAA;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAlBA;;AAAA;AAAA;AAAA;;AAAA;AAvBL;;;AAAA;AAuBK;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAfA;;AAAA;AAAA;AAAA;;AAAA;AARL;;;AAAA;;;AAAA;;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAQK;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AARL;;AAAA;;;;;;;;;AAQA;;;AAGe;;AAAA;;AAAoB;;AAApB;AAAP;AACO;;AAAA;;AAAA;AAAP;AAEqC;;AAAA;;AAAA;AAApB;AAAA;AAAA;AAAA;AACzB;;;AAC4C;;AAAA;;AAAA;AAAhC;AAAA;;AAAA;AAAA;AAIJ;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;AACO;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAP;;AAAA;AAHI;;AAAA;AAAA;;AAAA;AAAA;;;;AAKZ;;;AAG8C;;AAApB;AAAA;AAAA;AAClB;AAAA;AACA;;AAAA;AACO;;AAAA;;AAAA;AAAP;AAEA;AAAsB;;;;;;;;AAAtB;;;AAAqD;;;AAArD;AAEA;;AAAY;AAAZ;AACR;;;AAC8B;;AAAlB;;AAIJ;;AAAA;AAAA;AAFkB;;AAAd;;AAAA;AAAA;;;;AAIZ;;;AAGiD;;AAApB;AAAA;AAAA;AAAA;AAClB;;;AACc;AAAb;;AACI;AAAA;AAAA;AAAA;AAAR;;AAAA;;AAAA",
   "op_pc_offset": 0,
   "pc_events": {
     "1": {
-      "subroutine": "algopy.arc4.ARC4Contract.approval_program",
+      "subroutine": "smart_contracts.bank.contract.Bank.__algopy_entrypoint_with_init",
       "params": {},
       "block": "main",
       "stack_in": [],
@@ -58,588 +58,850 @@
       "stack_in": [],
       "op": "txn NumAppArgs",
       "defined_out": [
-        "tmp%0#1"
+        "tmp%0#2"
       ],
       "stack_out": [
-        "tmp%0#1"
+        "tmp%0#2"
       ]
     },
     "36": {
-      "op": "bz main___algopy_default_create@11",
+      "op": "bz main_bare_routing@8",
       "stack_out": []
     },
     "39": {
-      "op": "txn OnCompletion",
-      "defined_out": [
-        "tmp%2#0"
-      ],
-      "stack_out": [
-        "tmp%2#0"
-      ]
-    },
-    "41": {
-      "op": "!",
-      "defined_out": [
-        "tmp%3#0"
-      ],
-      "stack_out": [
-        "tmp%3#0"
-      ]
-    },
-    "42": {
-      "error": "OnCompletion must be NoOp",
-      "op": "assert // OnCompletion must be NoOp",
-      "stack_out": []
-    },
-    "43": {
-      "op": "txn ApplicationID",
-      "defined_out": [
-        "tmp%4#0"
-      ],
-      "stack_out": [
-        "tmp%4#0"
-      ]
-    },
-    "45": {
-      "op": "assert",
-      "stack_out": []
-    },
-    "46": {
-      "op": "pushbytess 0x9f597c32 0x31214176 // method \"deposit(string,pay)uint64\", method \"withdraw(uint64)uint64\"",
+      "op": "pushbytess 0x9f597c32 0x31214176 0x59b72775 // method \"deposit(string,pay)uint64\", method \"withdraw(uint64)uint64\", method \"get_all_fields()(uint64,uint64)\"",
       "defined_out": [
         "Method(deposit(string,pay)uint64)",
+        "Method(get_all_fields()(uint64,uint64))",
         "Method(withdraw(uint64)uint64)"
       ],
       "stack_out": [
         "Method(deposit(string,pay)uint64)",
-        "Method(withdraw(uint64)uint64)"
+        "Method(withdraw(uint64)uint64)",
+        "Method(get_all_fields()(uint64,uint64))"
       ]
     },
-    "58": {
+    "56": {
       "op": "txna ApplicationArgs 0",
       "defined_out": [
         "Method(deposit(string,pay)uint64)",
+        "Method(get_all_fields()(uint64,uint64))",
         "Method(withdraw(uint64)uint64)",
-        "tmp%6#0"
+        "tmp%2#0"
       ],
       "stack_out": [
         "Method(deposit(string,pay)uint64)",
         "Method(withdraw(uint64)uint64)",
-        "tmp%6#0"
+        "Method(get_all_fields()(uint64,uint64))",
+        "tmp%2#0"
       ]
     },
-    "61": {
-      "op": "match deposit withdraw",
+    "59": {
+      "op": "match main_deposit_route@5 main_withdraw_route@6 main_get_all_fields_route@7",
       "stack_out": []
     },
     "67": {
-      "op": "err"
+      "block": "main_after_if_else@10",
+      "stack_in": [],
+      "op": "intc_1 // 0",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
     },
     "68": {
-      "block": "main___algopy_default_create@11",
+      "op": "return",
+      "stack_out": []
+    },
+    "69": {
+      "block": "main_get_all_fields_route@7",
       "stack_in": [],
       "op": "txn OnCompletion",
       "defined_out": [
-        "tmp%7#0"
+        "tmp%17#0"
       ],
       "stack_out": [
-        "tmp%7#0"
-      ]
-    },
-    "70": {
-      "op": "!",
-      "defined_out": [
-        "tmp%8#0"
-      ],
-      "stack_out": [
-        "tmp%8#0"
+        "tmp%17#0"
       ]
     },
     "71": {
-      "op": "txn ApplicationID",
-      "defined_out": [
-        "tmp%8#0",
-        "tmp%9#0"
-      ],
-      "stack_out": [
-        "tmp%8#0",
-        "tmp%9#0"
-      ]
-    },
-    "73": {
       "op": "!",
       "defined_out": [
-        "tmp%10#0",
-        "tmp%8#0"
+        "tmp%18#0"
       ],
       "stack_out": [
-        "tmp%8#0",
-        "tmp%10#0"
+        "tmp%18#0"
       ]
     },
-    "74": {
-      "op": "&&",
+    "72": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "73": {
+      "op": "txn ApplicationID",
       "defined_out": [
-        "tmp%11#0"
+        "tmp%19#0"
       ],
       "stack_out": [
-        "tmp%11#0"
+        "tmp%19#0"
       ]
     },
     "75": {
-      "error": "OnCompletion must be NoOp && can only call when creating",
-      "op": "return // on error: OnCompletion must be NoOp && can only call when creating",
-      "defined_out": [],
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
       "stack_out": []
     },
     "76": {
-      "subroutine": "smart_contracts.bank.contract.Bank.deposit[routing]",
-      "params": {},
-      "block": "deposit",
-      "stack_in": [],
-      "op": "txna ApplicationArgs 1",
+      "callsub": "smart_contracts.bank.contract.Bank.get_all_fields",
+      "op": "callsub get_all_fields",
       "defined_out": [
-        "tmp%0#0"
+        "elements_to_encode%0#0",
+        "elements_to_encode%1#0"
       ],
       "stack_out": [
-        "tmp%0#0"
+        "elements_to_encode%0#0",
+        "elements_to_encode%1#0"
       ]
     },
     "79": {
-      "op": "dup",
-      "defined_out": [
-        "tmp%0#0",
-        "tmp%0#0 (copy)"
-      ],
+      "op": "swap",
       "stack_out": [
-        "tmp%0#0",
-        "tmp%0#0 (copy)"
+        "elements_to_encode%1#0",
+        "elements_to_encode%0#0"
       ]
     },
     "80": {
-      "op": "intc_1 // 0",
+      "op": "itob",
       "defined_out": [
-        "0",
-        "tmp%0#0",
-        "tmp%0#0 (copy)"
+        "elements_to_encode%1#0",
+        "val_as_bytes%2#0"
       ],
       "stack_out": [
-        "tmp%0#0",
-        "tmp%0#0 (copy)",
-        "0"
+        "elements_to_encode%1#0",
+        "val_as_bytes%2#0"
       ]
     },
     "81": {
-      "op": "extract_uint16",
-      "defined_out": [
-        "aggregate%array_length%0#0",
-        "tmp%0#0"
-      ],
+      "op": "swap",
       "stack_out": [
-        "tmp%0#0",
-        "aggregate%array_length%0#0"
+        "val_as_bytes%2#0",
+        "elements_to_encode%1#0"
       ]
     },
     "82": {
-      "op": "pushint 2 // 2",
+      "op": "itob",
       "defined_out": [
-        "2",
-        "aggregate%array_length%0#0",
-        "tmp%0#0"
+        "val_as_bytes%2#0",
+        "val_as_bytes%3#0"
       ],
       "stack_out": [
-        "tmp%0#0",
-        "aggregate%array_length%0#0",
-        "2"
+        "val_as_bytes%2#0",
+        "val_as_bytes%3#0"
+      ]
+    },
+    "83": {
+      "op": "concat",
+      "defined_out": [
+        "encoded_tuple_buffer%2#0"
+      ],
+      "stack_out": [
+        "encoded_tuple_buffer%2#0"
       ]
     },
     "84": {
-      "op": "+",
+      "op": "bytec_1 // 0x151f7c75",
       "defined_out": [
-        "add%0#0",
-        "tmp%0#0"
+        "0x151f7c75",
+        "encoded_tuple_buffer%2#0"
       ],
       "stack_out": [
-        "tmp%0#0",
-        "add%0#0"
+        "encoded_tuple_buffer%2#0",
+        "0x151f7c75"
       ]
     },
     "85": {
       "op": "swap",
       "stack_out": [
-        "add%0#0",
-        "tmp%0#0"
+        "0x151f7c75",
+        "encoded_tuple_buffer%2#0"
       ]
     },
     "86": {
-      "op": "len",
+      "op": "concat",
       "defined_out": [
-        "add%0#0",
-        "len%0#0"
+        "tmp%21#0"
       ],
       "stack_out": [
-        "add%0#0",
-        "len%0#0"
+        "tmp%21#0"
       ]
     },
     "87": {
-      "op": "==",
-      "defined_out": [
-        "eq%0#0"
-      ],
-      "stack_out": [
-        "eq%0#0"
-      ]
-    },
-    "88": {
-      "error": "invalid number of bytes for (len+utf8[])",
-      "op": "assert // invalid number of bytes for (len+utf8[])",
+      "op": "log",
       "stack_out": []
     },
-    "89": {
-      "op": "txn GroupIndex",
-      "defined_out": [
-        "tmp%2#0"
-      ],
-      "stack_out": [
-        "tmp%2#0"
-      ]
-    },
-    "91": {
+    "88": {
       "op": "intc_0 // 1",
       "defined_out": [
-        "1",
-        "tmp%2#0"
+        "tmp%0#0"
       ],
       "stack_out": [
-        "tmp%2#0",
-        "1"
+        "tmp%0#0"
+      ]
+    },
+    "89": {
+      "op": "return",
+      "stack_out": []
+    },
+    "90": {
+      "block": "main_withdraw_route@6",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%11#0"
+      ],
+      "stack_out": [
+        "tmp%11#0"
       ]
     },
     "92": {
-      "op": "-",
+      "op": "!",
       "defined_out": [
-        "pay_txn#0"
+        "tmp%12#0"
       ],
       "stack_out": [
-        "pay_txn#0"
+        "tmp%12#0"
       ]
     },
     "93": {
-      "op": "dup",
-      "defined_out": [
-        "pay_txn#0",
-        "pay_txn#0 (copy)"
-      ],
-      "stack_out": [
-        "pay_txn#0",
-        "pay_txn#0 (copy)"
-      ]
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
     },
     "94": {
-      "op": "gtxns TypeEnum",
+      "op": "txn ApplicationID",
       "defined_out": [
-        "gtxn_type%0#0",
-        "pay_txn#0"
+        "tmp%13#0"
       ],
       "stack_out": [
-        "pay_txn#0",
-        "gtxn_type%0#0"
+        "tmp%13#0"
       ]
     },
     "96": {
-      "op": "intc_0 // pay",
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "97": {
+      "op": "txna ApplicationArgs 1",
       "defined_out": [
-        "gtxn_type%0#0",
-        "pay",
-        "pay_txn#0"
+        "reinterpret_bytes[8]%0#0"
       ],
       "stack_out": [
-        "pay_txn#0",
+        "reinterpret_bytes[8]%0#0"
+      ]
+    },
+    "100": {
+      "op": "btoi",
+      "defined_out": [
+        "tmp%15#0"
+      ],
+      "stack_out": [
+        "tmp%15#0"
+      ]
+    },
+    "101": {
+      "callsub": "smart_contracts.bank.contract.Bank.withdraw",
+      "op": "callsub withdraw",
+      "defined_out": [
+        "to_encode%1#0"
+      ],
+      "stack_out": [
+        "to_encode%1#0"
+      ]
+    },
+    "104": {
+      "op": "itob",
+      "defined_out": [
+        "val_as_bytes%1#0"
+      ],
+      "stack_out": [
+        "val_as_bytes%1#0"
+      ]
+    },
+    "105": {
+      "op": "bytec_1 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "val_as_bytes%1#0"
+      ],
+      "stack_out": [
+        "val_as_bytes%1#0",
+        "0x151f7c75"
+      ]
+    },
+    "106": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "val_as_bytes%1#0"
+      ]
+    },
+    "107": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%16#0"
+      ],
+      "stack_out": [
+        "tmp%16#0"
+      ]
+    },
+    "108": {
+      "op": "log",
+      "stack_out": []
+    },
+    "109": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "110": {
+      "op": "return",
+      "stack_out": []
+    },
+    "111": {
+      "block": "main_deposit_route@5",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "113": {
+      "op": "!",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "114": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "115": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%5#0"
+      ],
+      "stack_out": [
+        "tmp%5#0"
+      ]
+    },
+    "117": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "118": {
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%7#0"
+      ],
+      "stack_out": [
+        "tmp%7#0"
+      ]
+    },
+    "121": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0"
+      ]
+    },
+    "124": {
+      "op": "txn GroupIndex",
+      "defined_out": [
+        "tmp%8#0",
+        "tmp%9#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "tmp%9#0"
+      ]
+    },
+    "126": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1",
+        "tmp%8#0",
+        "tmp%9#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "tmp%9#0",
+        "1"
+      ]
+    },
+    "127": {
+      "op": "-",
+      "defined_out": [
+        "gtxn_idx%0#0",
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "gtxn_idx%0#0"
+      ]
+    },
+    "128": {
+      "op": "dup",
+      "defined_out": [
+        "gtxn_idx%0#0",
+        "gtxn_idx%0#0 (copy)",
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "gtxn_idx%0#0",
+        "gtxn_idx%0#0 (copy)"
+      ]
+    },
+    "129": {
+      "op": "gtxns TypeEnum",
+      "defined_out": [
+        "gtxn_idx%0#0",
+        "gtxn_type%0#0",
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "gtxn_idx%0#0",
+        "gtxn_type%0#0"
+      ]
+    },
+    "131": {
+      "op": "intc_0 // pay",
+      "defined_out": [
+        "gtxn_idx%0#0",
+        "gtxn_type%0#0",
+        "pay",
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "gtxn_idx%0#0",
         "gtxn_type%0#0",
         "pay"
       ]
     },
-    "97": {
+    "132": {
       "op": "==",
       "defined_out": [
+        "gtxn_idx%0#0",
         "gtxn_type_matches%0#0",
-        "pay_txn#0"
+        "tmp%8#0"
       ],
       "stack_out": [
-        "pay_txn#0",
+        "tmp%8#0",
+        "gtxn_idx%0#0",
         "gtxn_type_matches%0#0"
       ]
     },
-    "98": {
+    "133": {
       "error": "transaction type is pay",
       "op": "assert // transaction type is pay",
       "stack_out": [
-        "pay_txn#0"
+        "tmp%8#0",
+        "gtxn_idx%0#0"
       ]
     },
-    "99": {
-      "op": "dup",
+    "134": {
+      "callsub": "smart_contracts.bank.contract.Bank.deposit",
+      "op": "callsub deposit",
+      "defined_out": [
+        "to_encode%0#0"
+      ],
       "stack_out": [
-        "pay_txn#0",
+        "to_encode%0#0"
+      ]
+    },
+    "137": {
+      "op": "itob",
+      "defined_out": [
+        "val_as_bytes%0#0"
+      ],
+      "stack_out": [
+        "val_as_bytes%0#0"
+      ]
+    },
+    "138": {
+      "op": "bytec_1 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "val_as_bytes%0#0"
+      ],
+      "stack_out": [
+        "val_as_bytes%0#0",
+        "0x151f7c75"
+      ]
+    },
+    "139": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "val_as_bytes%0#0"
+      ]
+    },
+    "140": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%10#0"
+      ],
+      "stack_out": [
+        "tmp%10#0"
+      ]
+    },
+    "141": {
+      "op": "log",
+      "stack_out": []
+    },
+    "142": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "143": {
+      "op": "return",
+      "stack_out": []
+    },
+    "144": {
+      "block": "main_bare_routing@8",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%22#0"
+      ],
+      "stack_out": [
+        "tmp%22#0"
+      ]
+    },
+    "146": {
+      "op": "bnz main_after_if_else@10",
+      "stack_out": []
+    },
+    "149": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%23#0"
+      ],
+      "stack_out": [
+        "tmp%23#0"
+      ]
+    },
+    "151": {
+      "op": "!",
+      "defined_out": [
+        "tmp%24#0"
+      ],
+      "stack_out": [
+        "tmp%24#0"
+      ]
+    },
+    "152": {
+      "error": "can only call when creating",
+      "op": "assert // can only call when creating",
+      "stack_out": []
+    },
+    "153": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "154": {
+      "op": "return",
+      "stack_out": []
+    },
+    "155": {
+      "subroutine": "smart_contracts.bank.contract.Bank.deposit",
+      "params": {
+        "memo#0": "bytes",
+        "pay_txn#0": "uint64"
+      },
+      "block": "deposit",
+      "stack_in": [],
+      "op": "proto 2 1"
+    },
+    "158": {
+      "op": "frame_dig -1",
+      "defined_out": [
+        "pay_txn#0 (copy)"
+      ],
+      "stack_out": [
         "pay_txn#0 (copy)"
       ]
     },
-    "100": {
+    "160": {
       "op": "gtxns Receiver",
       "defined_out": [
-        "pay_txn#0",
-        "tmp%0#1"
+        "tmp%0#0"
       ],
       "stack_out": [
-        "pay_txn#0",
-        "tmp%0#1"
+        "tmp%0#0"
       ]
     },
-    "102": {
+    "162": {
       "op": "global CurrentApplicationAddress",
       "defined_out": [
-        "pay_txn#0",
-        "tmp%0#1",
-        "tmp%1#1"
+        "tmp%0#0",
+        "tmp%1#0"
       ],
       "stack_out": [
-        "pay_txn#0",
-        "tmp%0#1",
-        "tmp%1#1"
+        "tmp%0#0",
+        "tmp%1#0"
       ]
     },
-    "104": {
+    "164": {
       "op": "==",
       "defined_out": [
-        "pay_txn#0",
-        "tmp%2#1"
+        "tmp%2#0"
       ],
       "stack_out": [
-        "pay_txn#0",
-        "tmp%2#1"
+        "tmp%2#0"
       ]
     },
-    "105": {
+    "165": {
       "error": "Receiver must be the contract address",
       "op": "assert // Receiver must be the contract address",
-      "stack_out": [
-        "pay_txn#0"
-      ]
+      "stack_out": []
     },
-    "106": {
-      "op": "dup",
+    "166": {
+      "op": "frame_dig -1",
       "stack_out": [
-        "pay_txn#0",
         "pay_txn#0 (copy)"
       ]
     },
-    "107": {
+    "168": {
       "op": "gtxns Amount",
       "defined_out": [
-        "pay_txn#0",
-        "tmp%3#1"
+        "tmp%3#0"
       ],
       "stack_out": [
-        "pay_txn#0",
-        "tmp%3#1"
+        "tmp%3#0"
       ]
     },
-    "109": {
+    "170": {
       "op": "dup",
-      "stack_out": [
-        "pay_txn#0",
-        "tmp%3#1",
-        "tmp%3#1"
-      ]
-    },
-    "110": {
-      "op": "cover 2",
       "defined_out": [
-        "pay_txn#0",
-        "tmp%3#1"
+        "tmp%3#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "pay_txn#0",
-        "tmp%3#1"
+        "tmp%3#0",
+        "tmp%3#0"
       ]
     },
-    "112": {
+    "171": {
       "error": "Deposit amount must be greater than zero",
       "op": "assert // Deposit amount must be greater than zero",
       "stack_out": [
-        "tmp%3#1",
-        "pay_txn#0"
+        "tmp%3#0"
       ]
     },
-    "113": {
+    "172": {
+      "op": "frame_dig -1",
+      "stack_out": [
+        "tmp%3#0",
+        "pay_txn#0 (copy)"
+      ]
+    },
+    "174": {
       "op": "gtxns Sender",
       "defined_out": [
-        "materialized_values%0#0",
-        "tmp%3#1"
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0"
+        "tmp%3#0",
+        "tmp%5#0"
       ]
     },
-    "115": {
+    "176": {
       "op": "dup",
       "defined_out": [
-        "materialized_values%0#0",
-        "tmp%3#1"
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "materialized_values%0#0"
+        "tmp%3#0",
+        "tmp%5#0",
+        "tmp%5#0"
       ]
     },
-    "116": {
+    "177": {
       "op": "box_get",
       "defined_out": [
         "exists#0",
-        "materialized_values%0#0",
         "maybe_value%0#0",
-        "tmp%3#1"
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "maybe_value%0#0",
         "exists#0"
       ]
     },
-    "117": {
+    "178": {
       "op": "swap",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "exists#0",
         "maybe_value%0#0"
       ]
     },
-    "118": {
+    "179": {
       "op": "btoi",
       "defined_out": [
         "amount#0",
         "exists#0",
-        "materialized_values%0#0",
-        "tmp%3#1"
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "exists#0",
         "amount#0"
       ]
     },
-    "119": {
+    "180": {
       "op": "swap",
       "defined_out": [
         "amount#0",
         "exists#0",
-        "materialized_values%0#0",
-        "tmp%3#1"
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "exists#0"
       ]
     },
-    "120": {
-      "op": "bz deposit_else_body@3",
+    "181": {
+      "op": "bz deposit_else_body@2",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0"
       ]
     },
-    "123": {
-      "op": "dup",
+    "184": {
+      "op": "frame_dig 2",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "amount#0"
       ]
     },
-    "124": {
-      "op": "dig 3",
+    "186": {
+      "op": "frame_dig 0",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "amount#0",
-        "tmp%3#1"
+        "tmp%3#0"
       ]
     },
-    "126": {
+    "188": {
       "op": "+",
       "defined_out": [
         "amount#0",
-        "materialized_values%0#0",
-        "tmp%3#1",
-        "tmp%6#0"
+        "new_box_value%0#0",
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "tmp%6#0"
+        "new_box_value%0#0"
       ]
     },
-    "127": {
+    "189": {
       "op": "itob",
       "defined_out": [
         "amount#0",
-        "encoded_value%0#0",
-        "materialized_values%0#0",
-        "tmp%3#1"
+        "new_box_value%1#0",
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "encoded_value%0#0"
+        "new_box_value%1#0"
       ]
     },
-    "128": {
-      "op": "dig 2",
+    "190": {
+      "op": "frame_dig 1",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "encoded_value%0#0",
-        "materialized_values%0#0"
+        "new_box_value%1#0",
+        "tmp%5#0"
       ]
     },
-    "130": {
+    "192": {
       "op": "swap",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "materialized_values%0#0",
-        "encoded_value%0#0"
+        "tmp%5#0",
+        "new_box_value%1#0"
       ]
     },
-    "131": {
+    "193": {
       "op": "box_put",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0"
       ]
     },
-    "132": {
-      "block": "deposit_after_if_else@4",
+    "194": {
+      "block": "deposit_after_if_else@3",
       "stack_in": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0"
       ],
       "op": "intc_1 // 0",
@@ -647,593 +909,451 @@
         "0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "0"
       ]
     },
-    "133": {
+    "195": {
       "op": "bytec_0 // \"total_deposit\"",
       "defined_out": [
         "\"total_deposit\"",
         "0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "0",
         "\"total_deposit\""
       ]
     },
-    "134": {
+    "196": {
       "op": "app_global_get_ex",
       "defined_out": [
         "maybe_exists%1#0",
         "maybe_value%1#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "maybe_value%1#0",
         "maybe_exists%1#0"
       ]
     },
-    "135": {
+    "197": {
       "error": "check self.total_deposit exists",
       "op": "assert // check self.total_deposit exists",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "maybe_value%1#0"
       ]
     },
-    "136": {
-      "op": "dig 3",
+    "198": {
+      "op": "frame_dig 0",
       "defined_out": [
         "maybe_value%1#0",
-        "tmp%3#1"
+        "tmp%3#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "maybe_value%1#0",
-        "tmp%3#1"
+        "tmp%3#0"
       ]
     },
-    "138": {
+    "200": {
       "op": "+",
       "defined_out": [
-        "tmp%3#1",
-        "tmp%9#0"
+        "new_state_value%0#0",
+        "tmp%3#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "tmp%9#0"
+        "new_state_value%0#0"
       ]
     },
-    "139": {
+    "201": {
       "op": "bytec_0 // \"total_deposit\"",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "tmp%9#0",
+        "new_state_value%0#0",
         "\"total_deposit\""
       ]
     },
-    "140": {
+    "202": {
       "op": "swap",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "\"total_deposit\"",
-        "tmp%9#0"
+        "new_state_value%0#0"
       ]
     },
-    "141": {
+    "203": {
       "op": "app_global_put",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0"
       ]
     },
-    "142": {
-      "op": "dig 1",
+    "204": {
+      "op": "frame_dig 1",
       "defined_out": [
-        "materialized_values%0#0",
-        "tmp%3#1"
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "materialized_values%0#0"
+        "tmp%5#0"
       ]
     },
-    "144": {
+    "206": {
       "op": "box_get",
       "defined_out": [
-        "aggregate%box_get%0#0",
-        "aggregate%box_get%1#0",
-        "materialized_values%0#0",
-        "tmp%3#1"
+        "maybe_exists%2#0",
+        "maybe_value%2#0",
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "aggregate%box_get%0#0",
-        "aggregate%box_get%1#0"
+        "maybe_value%2#0",
+        "maybe_exists%2#0"
       ]
     },
-    "145": {
+    "207": {
+      "op": "swap",
+      "stack_out": [
+        "tmp%3#0",
+        "tmp%5#0",
+        "amount#0",
+        "maybe_exists%2#0",
+        "maybe_value%2#0"
+      ]
+    },
+    "208": {
+      "op": "btoi",
+      "defined_out": [
+        "maybe_exists%2#0",
+        "maybe_value_converted%1#0",
+        "tmp%3#0",
+        "tmp%5#0"
+      ],
+      "stack_out": [
+        "tmp%3#0",
+        "tmp%5#0",
+        "amount#0",
+        "maybe_exists%2#0",
+        "maybe_value_converted%1#0"
+      ]
+    },
+    "209": {
+      "op": "swap",
+      "stack_out": [
+        "tmp%3#0",
+        "tmp%5#0",
+        "amount#0",
+        "maybe_value_converted%1#0",
+        "maybe_exists%2#0"
+      ]
+    },
+    "210": {
       "error": "check self.deposits entry exists",
       "op": "assert // check self.deposits entry exists",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "amount#0",
-        "aggregate%box_get%0#0"
-      ]
-    },
-    "146": {
-      "op": "btoi",
-      "defined_out": [
-        "materialized_values%0#0",
-        "maybe_value_converted%1#0",
-        "tmp%3#1"
-      ],
-      "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
         "maybe_value_converted%1#0"
       ]
     },
-    "147": {
-      "op": "itob",
-      "defined_out": [
-        "aggregate%val_as_bytes%0#0",
-        "materialized_values%0#0",
-        "tmp%3#1"
-      ],
-      "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "amount#0",
-        "aggregate%val_as_bytes%0#0"
-      ]
+    "211": {
+      "op": "frame_bury 0"
     },
-    "148": {
-      "op": "bytec_1 // 0x151f7c75",
-      "defined_out": [
-        "0x151f7c75",
-        "aggregate%val_as_bytes%0#0",
-        "materialized_values%0#0",
-        "tmp%3#1"
-      ],
-      "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "amount#0",
-        "aggregate%val_as_bytes%0#0",
-        "0x151f7c75"
-      ]
+    "213": {
+      "retsub": true,
+      "op": "retsub"
     },
-    "149": {
-      "op": "swap",
-      "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "amount#0",
-        "0x151f7c75",
-        "aggregate%val_as_bytes%0#0"
-      ]
-    },
-    "150": {
-      "op": "concat",
-      "defined_out": [
-        "materialized_values%0#0",
-        "tmp%3#1",
-        "tmp%5#0"
-      ],
-      "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "amount#0",
-        "tmp%5#0"
-      ]
-    },
-    "151": {
-      "op": "log",
-      "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "amount#0"
-      ]
-    },
-    "152": {
-      "op": "intc_0 // 1",
-      "defined_out": [
-        "1",
-        "materialized_values%0#0",
-        "tmp%3#1"
-      ],
-      "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "amount#0",
-        "1"
-      ]
-    },
-    "153": {
-      "op": "return",
-      "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
-        "amount#0"
-      ]
-    },
-    "154": {
-      "block": "deposit_else_body@3",
+    "214": {
+      "block": "deposit_else_body@2",
       "stack_in": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0"
       ],
-      "op": "dig 2",
+      "op": "frame_dig 0",
       "defined_out": [
-        "tmp%3#1"
+        "tmp%3#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "tmp%3#1"
+        "tmp%3#0"
       ]
     },
-    "156": {
+    "216": {
       "op": "itob",
       "defined_out": [
-        "encoded_value%1#0",
-        "tmp%3#1"
+        "new_box_value%3#0",
+        "tmp%3#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "encoded_value%1#0"
+        "new_box_value%3#0"
       ]
     },
-    "157": {
-      "op": "dig 2",
+    "217": {
+      "op": "frame_dig 1",
       "defined_out": [
-        "encoded_value%1#0",
-        "materialized_values%0#0",
-        "tmp%3#1"
+        "new_box_value%3#0",
+        "tmp%3#0",
+        "tmp%5#0"
       ],
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "encoded_value%1#0",
-        "materialized_values%0#0"
+        "new_box_value%3#0",
+        "tmp%5#0"
       ]
     },
-    "159": {
+    "219": {
       "op": "swap",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0",
-        "materialized_values%0#0",
-        "encoded_value%1#0"
+        "tmp%5#0",
+        "new_box_value%3#0"
       ]
     },
-    "160": {
+    "220": {
       "op": "box_put",
       "stack_out": [
-        "tmp%3#1",
-        "materialized_values%0#0",
+        "tmp%3#0",
+        "tmp%5#0",
         "amount#0"
       ]
     },
-    "161": {
-      "op": "b deposit_after_if_else@4"
+    "221": {
+      "op": "b deposit_after_if_else@3"
     },
-    "164": {
-      "subroutine": "smart_contracts.bank.contract.Bank.withdraw[routing]",
-      "params": {},
+    "224": {
+      "subroutine": "smart_contracts.bank.contract.Bank.withdraw",
+      "params": {
+        "amount#0": "uint64"
+      },
       "block": "withdraw",
       "stack_in": [],
-      "op": "txna ApplicationArgs 1",
-      "defined_out": [
-        "tmp%0#0"
-      ],
-      "stack_out": [
-        "tmp%0#0"
-      ]
+      "op": "proto 1 1"
     },
-    "167": {
-      "op": "dup",
-      "defined_out": [
-        "tmp%0#0",
-        "tmp%0#0 (copy)"
-      ],
-      "stack_out": [
-        "tmp%0#0",
-        "tmp%0#0 (copy)"
-      ]
-    },
-    "168": {
-      "op": "len",
-      "defined_out": [
-        "len%0#0",
-        "tmp%0#0"
-      ],
-      "stack_out": [
-        "tmp%0#0",
-        "len%0#0"
-      ]
-    },
-    "169": {
-      "op": "pushint 8 // 8",
-      "defined_out": [
-        "8",
-        "len%0#0",
-        "tmp%0#0"
-      ],
-      "stack_out": [
-        "tmp%0#0",
-        "len%0#0",
-        "8"
-      ]
-    },
-    "171": {
-      "op": "==",
-      "defined_out": [
-        "eq%0#0",
-        "tmp%0#0"
-      ],
-      "stack_out": [
-        "tmp%0#0",
-        "eq%0#0"
-      ]
-    },
-    "172": {
-      "error": "invalid number of bytes for uint64",
-      "op": "assert // invalid number of bytes for uint64",
-      "stack_out": [
-        "tmp%0#0"
-      ]
-    },
-    "173": {
-      "op": "btoi",
-      "defined_out": [
-        "amount#0"
-      ],
-      "stack_out": [
-        "amount#0"
-      ]
-    },
-    "174": {
+    "227": {
       "op": "txn Sender",
       "defined_out": [
-        "amount#0",
-        "materialized_values%0#0"
+        "tmp%0#0"
       ],
       "stack_out": [
-        "amount#0",
-        "materialized_values%0#0"
+        "tmp%0#0"
       ]
     },
-    "176": {
+    "229": {
       "op": "box_get",
       "defined_out": [
-        "amount#0",
         "exists#0",
         "maybe_value%0#0"
       ],
       "stack_out": [
-        "amount#0",
         "maybe_value%0#0",
         "exists#0"
       ]
     },
-    "177": {
+    "230": {
       "op": "swap",
       "stack_out": [
-        "amount#0",
         "exists#0",
         "maybe_value%0#0"
       ]
     },
-    "178": {
+    "231": {
       "op": "btoi",
       "defined_out": [
-        "amount#0",
         "current#0",
         "exists#0"
       ],
       "stack_out": [
-        "amount#0",
         "exists#0",
         "current#0"
       ]
     },
-    "179": {
+    "232": {
       "op": "swap",
       "stack_out": [
-        "amount#0",
         "current#0",
         "exists#0"
       ]
     },
-    "180": {
+    "233": {
       "error": "No deposits found for this account",
       "op": "assert // No deposits found for this account",
       "stack_out": [
-        "amount#0",
         "current#0"
       ]
     },
-    "181": {
-      "op": "dig 1",
+    "234": {
+      "op": "frame_dig -1",
       "defined_out": [
-        "amount#0",
         "amount#0 (copy)",
         "current#0"
       ],
       "stack_out": [
-        "amount#0",
         "current#0",
         "amount#0 (copy)"
       ]
     },
-    "183": {
+    "236": {
       "error": "Withdrawal amount must be greater than zero",
       "op": "assert // Withdrawal amount must be greater than zero",
       "stack_out": [
-        "amount#0",
         "current#0"
       ]
     },
-    "184": {
-      "op": "dup2",
+    "237": {
+      "op": "frame_dig -1",
+      "stack_out": [
+        "current#0",
+        "amount#0 (copy)"
+      ]
+    },
+    "239": {
+      "op": "dig 1",
       "defined_out": [
-        "amount#0",
         "amount#0 (copy)",
         "current#0",
         "current#0 (copy)"
       ],
       "stack_out": [
-        "amount#0",
         "current#0",
         "amount#0 (copy)",
         "current#0 (copy)"
       ]
     },
-    "185": {
+    "241": {
       "op": "<=",
       "defined_out": [
-        "amount#0",
         "current#0",
-        "tmp%1#1"
+        "tmp%3#0"
       ],
       "stack_out": [
-        "amount#0",
         "current#0",
-        "tmp%1#1"
+        "tmp%3#0"
       ]
     },
-    "186": {
+    "242": {
       "error": "Withdrawal amount exceeds balance",
       "op": "assert // Withdrawal amount exceeds balance",
       "stack_out": [
-        "amount#0",
         "current#0"
       ]
     },
-    "187": {
+    "243": {
       "op": "itxn_begin"
     },
-    "188": {
+    "244": {
       "op": "txn Sender",
       "defined_out": [
-        "amount#0",
         "current#0",
         "inner_txn_params%0%%param_Receiver_idx_0#0"
       ],
       "stack_out": [
-        "amount#0",
         "current#0",
         "inner_txn_params%0%%param_Receiver_idx_0#0"
       ]
     },
-    "190": {
-      "op": "dig 2",
+    "246": {
+      "op": "frame_dig -1",
       "stack_out": [
-        "amount#0",
         "current#0",
         "inner_txn_params%0%%param_Receiver_idx_0#0",
         "amount#0 (copy)"
       ]
     },
-    "192": {
+    "248": {
       "op": "itxn_field Amount",
       "stack_out": [
-        "amount#0",
         "current#0",
         "inner_txn_params%0%%param_Receiver_idx_0#0"
       ]
     },
-    "194": {
+    "250": {
       "op": "itxn_field Receiver",
       "stack_out": [
-        "amount#0",
         "current#0"
       ]
     },
-    "196": {
+    "252": {
       "op": "intc_0 // pay",
       "defined_out": [
-        "amount#0",
         "current#0",
         "pay"
       ],
       "stack_out": [
-        "amount#0",
         "current#0",
         "pay"
       ]
     },
-    "197": {
+    "253": {
       "op": "itxn_field TypeEnum",
       "stack_out": [
-        "amount#0",
         "current#0"
       ]
     },
-    "199": {
+    "255": {
       "op": "intc_1 // 0",
       "defined_out": [
         "0",
-        "amount#0",
         "current#0"
       ],
       "stack_out": [
-        "amount#0",
         "current#0",
         "0"
       ]
     },
-    "200": {
+    "256": {
       "op": "itxn_field Fee",
       "stack_out": [
-        "amount#0",
         "current#0"
       ]
     },
-    "202": {
+    "258": {
       "op": "itxn_submit"
     },
-    "203": {
-      "op": "swap",
+    "259": {
+      "op": "frame_dig -1",
       "stack_out": [
         "current#0",
-        "amount#0"
+        "amount#0 (copy)"
       ]
     },
-    "204": {
+    "261": {
       "op": "-",
       "defined_out": [
         "remaining#0"
@@ -1242,7 +1362,7 @@
         "remaining#0"
       ]
     },
-    "205": {
+    "262": {
       "op": "dup",
       "defined_out": [
         "remaining#0"
@@ -1252,24 +1372,24 @@
         "remaining#0"
       ]
     },
-    "206": {
-      "op": "bnz withdraw_else_body@4",
+    "263": {
+      "op": "bnz withdraw_else_body@3",
       "stack_out": [
         "remaining#0"
       ]
     },
-    "209": {
+    "266": {
       "op": "txn Sender",
       "defined_out": [
-        "materialized_values%1#0",
-        "remaining#0"
+        "remaining#0",
+        "tmp%5#0"
       ],
       "stack_out": [
         "remaining#0",
-        "materialized_values%1#0"
+        "tmp%5#0"
       ]
     },
-    "211": {
+    "268": {
       "op": "box_del",
       "defined_out": [
         "remaining#0",
@@ -1280,18 +1400,18 @@
         "{box_del}"
       ]
     },
-    "212": {
+    "269": {
       "op": "pop",
       "stack_out": [
         "remaining#0"
       ]
     },
-    "213": {
-      "block": "withdraw_after_if_else@5",
+    "270": {
+      "block": "withdraw_after_if_else@4",
       "stack_in": [
         "remaining#0"
       ],
-      "op": "dup",
+      "op": "frame_dig 0",
       "defined_out": [
         "remaining#0"
       ],
@@ -1300,119 +1420,200 @@
         "remaining#0"
       ]
     },
-    "214": {
-      "op": "itob",
-      "defined_out": [
-        "aggregate%val_as_bytes%0#0",
-        "remaining#0"
-      ],
-      "stack_out": [
-        "remaining#0",
-        "aggregate%val_as_bytes%0#0"
-      ]
+    "272": {
+      "op": "swap"
     },
-    "215": {
-      "op": "bytec_1 // 0x151f7c75",
-      "defined_out": [
-        "0x151f7c75",
-        "aggregate%val_as_bytes%0#0",
-        "remaining#0"
-      ],
-      "stack_out": [
-        "remaining#0",
-        "aggregate%val_as_bytes%0#0",
-        "0x151f7c75"
-      ]
+    "273": {
+      "retsub": true,
+      "op": "retsub"
     },
-    "216": {
-      "op": "swap",
-      "stack_out": [
-        "remaining#0",
-        "0x151f7c75",
-        "aggregate%val_as_bytes%0#0"
-      ]
-    },
-    "217": {
-      "op": "concat",
-      "defined_out": [
-        "remaining#0",
-        "tmp%4#0"
-      ],
-      "stack_out": [
-        "remaining#0",
-        "tmp%4#0"
-      ]
-    },
-    "218": {
-      "op": "log",
-      "stack_out": [
-        "remaining#0"
-      ]
-    },
-    "219": {
-      "op": "intc_0 // 1",
-      "defined_out": [
-        "1",
-        "remaining#0"
-      ],
-      "stack_out": [
-        "remaining#0",
-        "1"
-      ]
-    },
-    "220": {
-      "op": "return",
-      "stack_out": [
-        "remaining#0"
-      ]
-    },
-    "221": {
-      "block": "withdraw_else_body@4",
+    "274": {
+      "block": "withdraw_else_body@3",
       "stack_in": [
         "remaining#0"
       ],
       "op": "txn Sender",
       "defined_out": [
-        "materialized_values%2#0"
+        "tmp%7#0"
       ],
       "stack_out": [
         "remaining#0",
-        "materialized_values%2#0"
+        "tmp%7#0"
       ]
     },
-    "223": {
-      "op": "dig 1",
+    "276": {
+      "op": "frame_dig 0",
       "defined_out": [
-        "materialized_values%2#0",
-        "remaining#0"
+        "remaining#0",
+        "tmp%7#0"
       ],
       "stack_out": [
         "remaining#0",
-        "materialized_values%2#0",
+        "tmp%7#0",
         "remaining#0"
       ]
     },
-    "225": {
+    "278": {
       "op": "itob",
       "defined_out": [
-        "encoded_value%0#0",
-        "materialized_values%2#0",
-        "remaining#0"
+        "new_box_value%0#0",
+        "remaining#0",
+        "tmp%7#0"
       ],
       "stack_out": [
         "remaining#0",
-        "materialized_values%2#0",
-        "encoded_value%0#0"
+        "tmp%7#0",
+        "new_box_value%0#0"
       ]
     },
-    "226": {
+    "279": {
       "op": "box_put",
       "stack_out": [
         "remaining#0"
       ]
     },
-    "227": {
-      "op": "b withdraw_after_if_else@5"
+    "280": {
+      "op": "b withdraw_after_if_else@4"
+    },
+    "283": {
+      "subroutine": "smart_contracts.bank.contract.Bank.get_all_fields",
+      "params": {},
+      "block": "get_all_fields",
+      "stack_in": [],
+      "op": "proto 0 2"
+    },
+    "286": {
+      "op": "txn Sender",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "288": {
+      "op": "box_get",
+      "defined_out": [
+        "exists#0",
+        "maybe_value%0#0"
+      ],
+      "stack_out": [
+        "maybe_value%0#0",
+        "exists#0"
+      ]
+    },
+    "289": {
+      "op": "swap",
+      "stack_out": [
+        "exists#0",
+        "maybe_value%0#0"
+      ]
+    },
+    "290": {
+      "op": "btoi",
+      "defined_out": [
+        "caller_amt#0",
+        "exists#0"
+      ],
+      "stack_out": [
+        "exists#0",
+        "caller_amt#0"
+      ]
+    },
+    "291": {
+      "op": "swap",
+      "defined_out": [
+        "caller_amt#0",
+        "exists#0"
+      ],
+      "stack_out": [
+        "caller_amt#0",
+        "exists#0"
+      ]
+    },
+    "292": {
+      "op": "bnz get_all_fields_after_if_else@2",
+      "stack_out": [
+        "caller_amt#0"
+      ]
+    },
+    "295": {
+      "op": "intc_1 // 0",
+      "stack_out": [
+        "caller_amt#0",
+        "caller_amt#0"
+      ]
+    },
+    "296": {
+      "op": "frame_bury 0",
+      "stack_out": [
+        "caller_amt#0"
+      ]
+    },
+    "298": {
+      "block": "get_all_fields_after_if_else@2",
+      "stack_in": [
+        "caller_amt#0"
+      ],
+      "op": "intc_1 // 0",
+      "defined_out": [
+        "0"
+      ],
+      "stack_out": [
+        "caller_amt#0",
+        "0"
+      ]
+    },
+    "299": {
+      "op": "bytec_0 // \"total_deposit\"",
+      "defined_out": [
+        "\"total_deposit\"",
+        "0"
+      ],
+      "stack_out": [
+        "caller_amt#0",
+        "0",
+        "\"total_deposit\""
+      ]
+    },
+    "300": {
+      "op": "app_global_get_ex",
+      "defined_out": [
+        "maybe_exists%1#0",
+        "maybe_value%1#0"
+      ],
+      "stack_out": [
+        "caller_amt#0",
+        "maybe_value%1#0",
+        "maybe_exists%1#0"
+      ]
+    },
+    "301": {
+      "error": "check self.total_deposit exists",
+      "op": "assert // check self.total_deposit exists",
+      "stack_out": [
+        "caller_amt#0",
+        "maybe_value%1#0"
+      ]
+    },
+    "302": {
+      "op": "frame_dig 0",
+      "defined_out": [
+        "caller_amt#0",
+        "maybe_value%1#0"
+      ],
+      "stack_out": [
+        "caller_amt#0",
+        "maybe_value%1#0",
+        "caller_amt#0"
+      ]
+    },
+    "304": {
+      "op": "uncover 2"
+    },
+    "306": {
+      "retsub": true,
+      "op": "retsub"
     }
   }
 }

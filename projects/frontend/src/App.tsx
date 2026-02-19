@@ -1,5 +1,6 @@
 import { SupportedWallet, WalletId, WalletManager, WalletProvider } from '@txnlab/use-wallet-react'
 import { SnackbarProvider } from 'notistack'
+import { PeraWalletConnect } from '@perawallet/connect'
 import Home from './Home'
 import { getAlgodConfigFromViteEnvironment, getKmdConfigFromViteEnvironment } from './utils/network/getAlgoClientConfigs'
 
@@ -8,11 +9,19 @@ if (import.meta.env.VITE_ALGOD_NETWORK === 'localnet') {
   const kmdConfig = getKmdConfigFromViteEnvironment()
   supportedWallets = [
     {
+      id: WalletId.PERA,
+      options: {
+        clientStatic: PeraWalletConnect,
+      },
+    },
+    {
       id: WalletId.KMD,
       options: {
         baseServer: kmdConfig.server,
         token: String(kmdConfig.token),
         port: String(kmdConfig.port),
+        wallet: kmdConfig.wallet,
+        password: kmdConfig.password,
       },
     },
   ]
