@@ -137,12 +137,16 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       
       harvestTimestamp = Math.floor(new Date(harvestDate).getTime() / 1000)
       
+      // Create client with explicit sender
       const client = new FoodSafetyAppClient({
         appId: BigInt(appId),
+        sender: activeAddress,
         algorand,
-        defaultSigner: transactionSigner,
-        sender: activeAddress, // Explicitly set sender at client level
       })
+      
+      // Set the signer for this specific transaction
+      algorand.setDefaultSigner(transactionSigner)
+      algorand.setSigner(activeAddress, transactionSigner)
       
       await client.send.createBatch({
         args: {
@@ -154,6 +158,7 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
           ipfsHash: ipfsHash || '',
         },
         sender: activeAddress,
+        signer: transactionSigner,
       })
       
       enqueueSnackbar(`Batch ${batchId} created successfully by ${activeAddress}`, { variant: 'success' })
