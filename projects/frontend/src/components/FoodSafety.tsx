@@ -144,10 +144,10 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
         algorand,
       })
       
-      // Set the signer for this specific transaction
+      // Set the signer
       algorand.setDefaultSigner(transactionSigner)
-      algorand.setSigner(activeAddress, transactionSigner)
       
+      // Call createBatch with explicit box MBR payment from connected account
       await client.send.createBatch({
         args: {
           batchId,
@@ -159,9 +159,13 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
         },
         sender: activeAddress,
         signer: transactionSigner,
+        // Explicitly set box references and let AlgoKit handle MBR payment from sender
+        sendParams: {
+          populateAppCallResources: true,
+        },
       })
       
-      enqueueSnackbar(`Batch ${batchId} created successfully by ${activeAddress}`, { variant: 'success' })
+      enqueueSnackbar(`Batch ${batchId} created successfully!`, { variant: 'success' })
       setBatchId('')
       setProductName('')
       setOriginLocation('')
