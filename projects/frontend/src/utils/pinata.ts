@@ -50,4 +50,3 @@ export function ipfsHttpUrl(cid: string): string {
   const gateway = import.meta.env.VITE_PINATA_GATEWAY || 'https://ipfs.io/ipfs'
   return `${gateway}/${cid}`
 }
-

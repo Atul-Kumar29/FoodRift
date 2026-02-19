@@ -327,6 +327,17 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       <form method="dialog" className="modal-box max-w-5xl max-h-[90vh] overflow-y-auto">
         <h3 className="font-bold text-lg mb-4">AgriTrust - Food Safety & Traceability</h3>
         
+        {/* Display connected account */}
+        {activeAddress && (
+          <div className="alert alert-info mb-4">
+            <div>
+              <span className="font-semibold">Connected Account:</span>
+              <br />
+              <span className="text-xs font-mono">{activeAddress}</span>
+            </div>
+          </div>
+        )}
+        
         <div className="flex flex-col gap-4">
           {/* Fund Account Section (LocalNet only) */}
           {algodConfig.network === 'localnet' && (
