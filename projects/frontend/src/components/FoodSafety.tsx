@@ -127,6 +127,8 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       
       setLoading(true)
       
+      console.log('Creating batch with account:', activeAddress)
+      
       // Upload file to IPFS if provided
       if (ipfsFile) {
         const result = await pinFileToIPFS(ipfsFile)
@@ -139,6 +141,7 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
         appId: BigInt(appId),
         algorand,
         defaultSigner: transactionSigner,
+        sender: activeAddress, // Explicitly set sender at client level
       })
       
       await client.send.createBatch({
@@ -153,14 +156,17 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
         sender: activeAddress,
       })
       
-      enqueueSnackbar(`Batch ${batchId} created successfully`, { variant: 'success' })
+      enqueueSnackbar(`Batch ${batchId} created successfully by ${activeAddress}`, { variant: 'success' })
       setBatchId('')
       setProductName('')
       setOriginLocation('')
       setHarvestDate('')
       setIpfsFile(null)
     } catch (e) {
-      enqueueSnackbar(`Create batch failed: ${(e as Error).message}`, { variant: 'error' })
+      const errorMsg = (e as Error).message
+      console.error('Create batch error:', errorMsg)
+      console.error('Expected account:', activeAddress)
+      enqueueSnackbar(`Create batch failed: ${errorMsg}`, { variant: 'error' })
     } finally {
       setLoading(false)
     }
