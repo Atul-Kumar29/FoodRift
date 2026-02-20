@@ -3,6 +3,7 @@ import { useWallet } from '@txnlab/use-wallet-react'
 import { useSnackbar } from 'notistack'
 import { AlgorandClient } from '@algorandfoundation/algokit-utils'
 import { FoodSafetyAppClient, FoodSafetyAppFactory } from '../contracts/FoodSafetyApp'
+import algosdk from 'algosdk'
 import { getAlgodConfigFromViteEnvironment, getIndexerConfigFromViteEnvironment } from '../utils/network/getAlgoClientConfigs'
 import { pinJSONToIPFS, pinFileToIPFS } from '../utils/pinata'
 
@@ -137,11 +138,10 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       
       harvestTimestamp = Math.floor(new Date(harvestDate).getTime() / 1000)
       
-      // Set the signer ONCE at the beginning
+      // Set the signer
       algorand.setDefaultSigner(transactionSigner)
-      algorand.setSigner(activeAddress, transactionSigner)
       
-      // Step 1: Deploy the contract with explicit sender
+      // Step 1: Deploy the contract
       const factory = new FoodSafetyAppFactory({ 
         defaultSender: activeAddress, 
         algorand,
@@ -156,31 +156,26 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       
       enqueueSnackbar(`Contract deployed! App ID: ${newId}. Creating batch...`, { variant: 'info' })
       
-      // Small delay to ensure deployment is confirmed
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      // Step 2: Get app address and send MBR payment
+      const appAddress = algosdk.getApplicationAddress(newId)
+      const boxMBR = 300000 // 0.3 ALGO
       
-      // Step 2: Create batch with MANUAL MBR payment
+      console.log('Sending MBR payment to app address:', appAddress)
+      
+      await algorand.send.payment({
+        sender: activeAddress,
+        receiver: appAddress,
+        amount: { microAlgo: boxMBR },
+        signer: transactionSigner,
+      })
+      
+      // Step 3: Create batch
       const client = new FoodSafetyAppClient({
         appId: BigInt(newId),
         sender: activeAddress,
         algorand,
       })
       
-      // Calculate box MBR (2500 + 400 per byte)
-      // Estimate: ~500 bytes for BatchRecord = ~202,500 microALGO = 0.2025 ALGO
-      const boxMBR = BigInt(250000) // 0.25 ALGO to be safe
-      
-      // Create MBR payment transaction from connected account to app account
-      const appAddress = (await algorand.client.algod.getApplicationByID(newId).do())['params']['creator']
-      
-      const mbrPayment = await algorand.send.payment({
-        sender: activeAddress,
-        receiver: activeAddress, // Pay to self to increase MBR
-        amount: { microAlgo: Number(boxMBR) },
-        signer: transactionSigner,
-      })
-      
-      // Now create the batch
       await client.send.createBatch({
         args: {
           batchId,
@@ -192,9 +187,6 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
         },
         sender: activeAddress,
         signer: transactionSigner,
-        sendParams: {
-          populateAppCallResources: true,
-        },
       })
       
       enqueueSnackbar(`Success! Contract ${newId} deployed and batch ${batchId} created!`, { variant: 'success' })
@@ -240,9 +232,8 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       // Set the signer
       algorand.setDefaultSigner(transactionSigner)
       
-      // Get app address to send MBR payment
-      const appInfo = await algorand.client.algod.getApplicationByID(Number(appId)).do()
-      const appAddress = appInfo['params']['creator'] // This gets the app address
+      // Get app address using algosdk (NOT the creator address!)
+      const appAddress = algosdk.getApplicationAddress(Number(appId))
       
       // Calculate box MBR: 2500 (base) + 400 * box_size
       // BatchRecord is ~500 bytes, so ~202,500 microALGO
