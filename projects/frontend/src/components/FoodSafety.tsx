@@ -237,17 +237,37 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       
       harvestTimestamp = Math.floor(new Date(harvestDate).getTime() / 1000)
       
-      // Create client with explicit sender
+      // Set the signer
+      algorand.setDefaultSigner(transactionSigner)
+      
+      // Get app address to send MBR payment
+      const appInfo = await algorand.client.algod.getApplicationByID(Number(appId)).do()
+      const appAddress = appInfo['params']['creator'] // This gets the app address
+      
+      // Calculate box MBR: 2500 (base) + 400 * box_size
+      // BatchRecord is ~500 bytes, so ~202,500 microALGO
+      const boxMBR = 300000 // 0.3 ALGO to be safe
+      
+      console.log('Sending MBR payment to app address:', appAddress)
+      
+      // Send MBR payment from connected wallet to app address
+      await algorand.send.payment({
+        sender: activeAddress,
+        receiver: appAddress,
+        amount: { microAlgo: boxMBR },
+        signer: transactionSigner,
+      })
+      
+      console.log('MBR payment sent, now creating batch...')
+      
+      // Create client
       const client = new FoodSafetyAppClient({
         appId: BigInt(appId),
         sender: activeAddress,
         algorand,
       })
       
-      // Set the signer
-      algorand.setDefaultSigner(transactionSigner)
-      
-      // Call createBatch with explicit box MBR payment from connected account
+      // Call createBatch - MBR is already paid
       await client.send.createBatch({
         args: {
           batchId,
@@ -259,10 +279,6 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
         },
         sender: activeAddress,
         signer: transactionSigner,
-        // Explicitly set box references and let AlgoKit handle MBR payment from sender
-        sendParams: {
-          populateAppCallResources: true,
-        },
       })
       
       enqueueSnackbar(`Batch ${batchId} created successfully!`, { variant: 'success' })
