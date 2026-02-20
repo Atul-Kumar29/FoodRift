@@ -127,7 +127,7 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       setDeploying(true)
       setLoading(true)
       
-      console.log('Deploying contract and creating batch with account:', activeAddress)
+      console.log('Deploying and creating batch with account:', activeAddress)
       
       // Upload file to IPFS if provided
       if (ipfsFile) {
@@ -137,24 +137,50 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
       
       harvestTimestamp = Math.floor(new Date(harvestDate).getTime() / 1000)
       
-      // Set the signer
+      // Set the signer ONCE at the beginning
       algorand.setDefaultSigner(transactionSigner)
+      algorand.setSigner(activeAddress, transactionSigner)
       
-      // Step 1: Deploy the contract
-      const factory = new FoodSafetyAppFactory({ defaultSender: activeAddress, algorand })
-      const deployResult = await factory.send.create.bare()
+      // Step 1: Deploy the contract with explicit sender
+      const factory = new FoodSafetyAppFactory({ 
+        defaultSender: activeAddress, 
+        algorand,
+      })
+      
+      const deployResult = await factory.send.create.bare({
+        sender: activeAddress,
+      })
+      
       const newId = Number(deployResult.appClient.appId)
       setAppId(newId)
       
-      enqueueSnackbar(`Contract deployed! App ID: ${newId}. Now creating batch...`, { variant: 'info' })
+      enqueueSnackbar(`Contract deployed! App ID: ${newId}. Creating batch...`, { variant: 'info' })
       
-      // Step 2: Create the first batch immediately
+      // Small delay to ensure deployment is confirmed
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Step 2: Create batch with MANUAL MBR payment
       const client = new FoodSafetyAppClient({
         appId: BigInt(newId),
         sender: activeAddress,
         algorand,
       })
       
+      // Calculate box MBR (2500 + 400 per byte)
+      // Estimate: ~500 bytes for BatchRecord = ~202,500 microALGO = 0.2025 ALGO
+      const boxMBR = BigInt(250000) // 0.25 ALGO to be safe
+      
+      // Create MBR payment transaction from connected account to app account
+      const appAddress = (await algorand.client.algod.getApplicationByID(newId).do())['params']['creator']
+      
+      const mbrPayment = await algorand.send.payment({
+        sender: activeAddress,
+        receiver: activeAddress, // Pay to self to increase MBR
+        amount: { microAlgo: Number(boxMBR) },
+        signer: transactionSigner,
+      })
+      
+      // Now create the batch
       await client.send.createBatch({
         args: {
           batchId,
@@ -171,7 +197,7 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
         },
       })
       
-      enqueueSnackbar(`Success! Contract deployed (${newId}) and batch ${batchId} created!`, { variant: 'success' })
+      enqueueSnackbar(`Success! Contract ${newId} deployed and batch ${batchId} created!`, { variant: 'success' })
       setBatchId('')
       setProductName('')
       setOriginLocation('')
@@ -180,6 +206,7 @@ const FoodSafety = ({ openModal, closeModal }: FoodSafetyProps) => {
     } catch (e) {
       const errorMsg = (e as Error).message
       console.error('Deploy and create error:', errorMsg)
+      console.error('Account used:', activeAddress)
       enqueueSnackbar(`Failed: ${errorMsg}`, { variant: 'error' })
     } finally {
       setDeploying(false)
